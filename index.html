@@ -3,42 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>132 // CHILL GUY - 個人檔案</title>
-  <!-- Google Fonts: Orbitron, Space Grotesk, JetBrains Mono -->
+  <title>132 // 水墨留白 · CHILL GUY</title>
+  
+  <!-- Google Fonts: Ma Shan Zheng (書法楷草), Noto Serif TC (典雅宋體/明體), Cinzel (英式古典) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Ma+Shan+Zheng&family=Noto+Serif+TC:wght@300;400;600;700;900&display=swap" rel="stylesheet">
 
   <style>
     /* =========================================================
-       CSS VARIABLES & DESIGN SYSTEM (TECH / OLED BLACK AESTHETIC)
+       CSS VARIABLES: 水墨禪意 (CHINESE INK WASH / SUMI-E AESTHETIC)
        ========================================================= */
     :root {
-      --bg-black: #050608;
-      --bg-surface: #0b0e14;
-      --bg-card: rgba(13, 17, 24, 0.75);
-      --bg-card-hover: rgba(18, 24, 36, 0.9);
+      --bg-ink-deep: #08090b;       /* 焦墨底色 */
+      --bg-ink-surface: #101216;    /* 濃墨層次 */
+      --bg-card: rgba(18, 20, 26, 0.78); /* 半透水墨紙質感 */
+      --bg-card-hover: rgba(26, 29, 38, 0.9);
       
-      --cyan-neon: #00f0ff;
-      --cyan-glow: rgba(0, 240, 255, 0.35);
-      --purple-neon: #a855f7;
-      --purple-glow: rgba(168, 85, 247, 0.35);
-      --emerald-neon: #00ffaa;
-      --emerald-glow: rgba(0, 255, 170, 0.3);
+      --paper-white: #f5f3ec;       /* 宣紙微黃米白 */
+      --paper-muted: #b5b1a5;       /* 淡墨灰 */
+      --ink-dim: #686763;          /* 煙嵐輕灰 */
       
-      --text-main: #f1f5f9;
-      --text-muted: #8492a6;
-      --text-dim: #475569;
+      --seal-red: #c93b2b;          /* 硃砂印泥紅 */
+      --seal-red-glow: rgba(201, 59, 43, 0.35);
+      --ink-gold: #c5a059;          /* 古籍金泥 */
+      --ink-gold-glow: rgba(197, 160, 89, 0.25);
       
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-cyan: rgba(0, 240, 255, 0.3);
-      --border-cyan-bright: rgba(0, 240, 255, 0.8);
+      --border-ink: rgba(245, 243, 236, 0.12);
+      --border-ink-active: rgba(197, 160, 89, 0.4);
       
-      --font-display: 'Orbitron', -apple-system, sans-serif;
-      --font-sans: 'Space Grotesk', -apple-system, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --font-brush: 'Ma Shan Zheng', cursive, serif;
+      --font-serif: 'Noto Serif TC', serif;
+      --font-en: 'Cinzel', serif;
       
-      --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-ink: cubic-bezier(0.16, 1, 0.3, 1);
+      --transition: all 0.45s var(--ease-ink);
     }
 
     /* Base Reset */
@@ -50,46 +49,48 @@
 
     html {
       scroll-behavior: smooth;
-      background-color: var(--bg-black);
-      color: var(--text-main);
-      font-family: var(--font-sans);
+      background-color: var(--bg-ink-deep);
+      color: var(--paper-white);
+      font-family: var(--font-serif);
       overflow-x: hidden;
       font-size: 16px;
     }
 
     body {
-      background-color: var(--bg-black);
+      background-color: var(--bg-ink-deep);
       min-height: 100vh;
       position: relative;
-      line-height: 1.6;
+      line-height: 1.85;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(25, 28, 35, 0.7) 0%, transparent 45%),
+        radial-gradient(circle at 85% 75%, rgba(20, 22, 28, 0.8) 0%, transparent 50%);
     }
 
-    /* Selection Color */
+    /* Selection Color (硃砂點染) */
     ::selection {
-      background: var(--cyan-neon);
-      color: #000;
+      background: var(--seal-red);
+      color: #fff;
     }
 
-    /* Custom Scrollbar */
+    /* Custom Scrollbar (墨筆條) */
     ::-webkit-scrollbar {
-      width: 6px;
+      width: 7px;
     }
     ::-webkit-scrollbar-track {
-      background: var(--bg-black);
+      background: #08090b;
     }
     ::-webkit-scrollbar-thumb {
-      background: #1e2638;
-      border-radius: 3px;
+      background: #252830;
+      border-radius: 4px;
     }
     ::-webkit-scrollbar-thumb:hover {
-      background: var(--cyan-neon);
-      box-shadow: 0 0 10px var(--cyan-neon);
+      background: var(--seal-red);
     }
 
-    /* Background Canvas */
-    #cyber-canvas {
+    /* Ink Dispersion Background Canvas */
+    #ink-canvas {
       position: fixed;
       top: 0;
       left: 0;
@@ -97,906 +98,851 @@
       height: 100vh;
       z-index: 0;
       pointer-events: none;
-      opacity: 0.75;
+      opacity: 0.55;
     }
 
-    /* High-tech Grid Overlay */
-    .grid-overlay {
+    /* Xuan Paper Texture Overlay (宣紙暗紋) */
+    .paper-texture {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
       background-image: 
-        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
+        radial-gradient(rgba(245, 243, 236, 0.02) 1px, transparent 1px);
+      background-size: 24px 24px;
       z-index: 1;
       pointer-events: none;
     }
 
-    /* Glowing Cyber Scanline Effect */
-    .scanline {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--cyan-neon), transparent);
-      opacity: 0.3;
-      z-index: 2;
-      animation: scanAnim 8s linear infinite;
-      pointer-events: none;
-    }
-
-    @keyframes scanAnim {
-      0% { top: -2%; opacity: 0; }
-      15% { opacity: 0.4; }
-      85% { opacity: 0.4; }
-      100% { top: 102%; opacity: 0; }
-    }
-
-    /* Wrapper */
-    .page-wrapper {
+    /* Page Wrapper */
+    .ink-wrapper {
       position: relative;
       z-index: 3;
       width: 100%;
-      max-width: 1140px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 0 1.5rem;
+      padding: 0 1.8rem;
     }
 
     /* =========================================================
-       NAVIGATION HUD
+       CHINESE SEAL (硃砂印章模組)
        ========================================================= */
-    .navbar {
+    .seal-stamp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--seal-red);
+      color: var(--seal-red);
+      background: rgba(201, 59, 43, 0.08);
+      font-family: var(--font-brush);
+      font-size: 1.15rem;
+      line-height: 1.1;
+      padding: 0.25rem 0.45rem;
+      border-radius: 4px;
+      position: relative;
+      box-shadow: 0 0 12px var(--seal-red-glow), inset 0 0 6px rgba(201, 59, 43, 0.15);
+      user-select: none;
+      transform: rotate(-2deg);
+      transition: var(--transition);
+    }
+
+    .seal-stamp:hover {
+      transform: rotate(0deg) scale(1.05);
+      box-shadow: 0 0 18px var(--seal-red);
+    }
+
+    .seal-round {
+      border-radius: 50%;
+      padding: 0.35rem 0.5rem;
+    }
+
+    /* =========================================================
+       NAVIGATION: 墨竹長廊導覽列
+       ========================================================= */
+    .ink-navbar {
       position: sticky;
-      top: 1rem;
+      top: 1.2rem;
       z-index: 100;
-      margin: 1.5rem auto 2rem;
-      background: rgba(10, 14, 22, 0.85);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border-cyan);
-      border-radius: 8px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 240, 255, 0.1);
+      margin: 1.5rem auto 2.5rem;
+      background: rgba(14, 16, 20, 0.88);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-ink);
+      border-radius: 4px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.8rem 1.4rem;
-      transition: var(--transition-smooth);
+      padding: 0.85rem 1.8rem;
+      transition: var(--transition);
     }
 
-    .nav-brand {
+    .nav-brand-group {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.9rem;
       text-decoration: none;
     }
 
-    .brand-glitch {
-      font-family: var(--font-display);
-      font-size: 1.5rem;
-      font-weight: 900;
-      color: #fff;
+    .brand-calligraphy {
+      font-family: var(--font-brush);
+      font-size: 1.85rem;
+      color: var(--paper-white);
       letter-spacing: 2px;
-      position: relative;
-      text-shadow: 0 0 10px var(--cyan-glow);
-    }
-
-    .brand-badge {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      padding: 0.15rem 0.5rem;
-      background: rgba(0, 255, 170, 0.12);
-      border: 1px solid var(--emerald-neon);
-      color: var(--emerald-neon);
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .pulse-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--emerald-neon);
-      border-radius: 50%;
-      animation: pulseGlow 1.8s infinite;
-    }
-
-    @keyframes pulseGlow {
-      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px var(--emerald-neon); }
-      50% { opacity: 0.4; transform: scale(0.8); }
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
     }
 
     .nav-menu {
       display: flex;
       list-style: none;
-      gap: 1.8rem;
+      gap: 2rem;
     }
 
     .nav-link {
-      color: var(--text-muted);
+      color: var(--paper-muted);
       text-decoration: none;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      letter-spacing: 1px;
-      transition: var(--transition-smooth);
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+      transition: var(--transition);
       position: relative;
       padding: 0.25rem 0;
     }
 
     .nav-link span {
-      color: var(--cyan-neon);
-      margin-right: 0.2rem;
-      font-size: 0.75rem;
+      font-family: var(--font-brush);
+      color: var(--ink-gold);
+      margin-right: 0.3rem;
+      font-size: 1.1rem;
     }
 
     .nav-link:hover {
-      color: #fff;
-      text-shadow: 0 0 8px var(--cyan-neon);
+      color: var(--paper-white);
+      text-shadow: 0 0 10px rgba(245, 243, 236, 0.5);
     }
 
     .nav-link::after {
       content: '';
       position: absolute;
-      bottom: 0;
-      left: 0;
+      bottom: -2px;
+      left: 50%;
       width: 0;
       height: 1px;
-      background: var(--cyan-neon);
-      box-shadow: 0 0 6px var(--cyan-neon);
-      transition: width 0.3s ease;
+      background: linear-gradient(90deg, transparent, var(--ink-gold), transparent);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
     }
 
     .nav-link:hover::after {
       width: 100%;
     }
 
-    /* Mobile Menu Toggle */
     .menu-toggle {
       display: none;
       background: transparent;
-      border: 1px solid var(--border-cyan);
-      color: var(--cyan-neon);
-      padding: 0.4rem 0.7rem;
-      border-radius: 4px;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
+      border: 1px solid var(--border-ink);
+      color: var(--paper-white);
+      font-family: var(--font-brush);
+      font-size: 1.1rem;
+      padding: 0.3rem 0.8rem;
       cursor: pointer;
+      border-radius: 4px;
     }
 
     /* =========================================================
-       HERO SECTION
+       HERO: 墨客迎風 (HERO SECTION)
        ========================================================= */
     .hero {
-      padding: 5rem 0 4rem;
+      padding: 5rem 0 4.5rem;
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
+      grid-template-columns: 1.25fr 0.75fr;
       align-items: center;
-      gap: 3rem;
+      gap: 3.5rem;
       min-height: calc(85vh - 100px);
-    }
-
-    .hero-content {
       position: relative;
     }
 
-    .cyber-pill {
+    .hero-badge-tag {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      background: rgba(0, 240, 255, 0.08);
-      border: 1px solid var(--border-cyan);
-      padding: 0.35rem 0.9rem;
-      border-radius: 30px;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--cyan-neon);
-      margin-bottom: 1.5rem;
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+      gap: 0.7rem;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      color: var(--ink-gold);
+      margin-bottom: 1.2rem;
     }
 
-    .hero-title {
-      font-family: var(--font-display);
-      font-size: clamp(3.2rem, 7vw, 5.5rem);
-      font-weight: 900;
-      line-height: 1;
-      letter-spacing: -1px;
-      color: #ffffff;
+    .hero-name-row {
+      display: flex;
+      align-items: baseline;
+      gap: 1.5rem;
       margin-bottom: 0.8rem;
-      position: relative;
-      text-transform: uppercase;
     }
 
-    .hero-title .glow-cyan {
-      color: var(--cyan-neon);
-      text-shadow: 0 0 20px rgba(0, 240, 255, 0.6), 0 0 40px rgba(0, 240, 255, 0.3);
+    .hero-title-brush {
+      font-family: var(--font-brush);
+      font-size: clamp(3.8rem, 8vw, 6.2rem);
+      line-height: 1;
+      letter-spacing: 4px;
+      color: var(--paper-white);
+      text-shadow: 
+        0 0 25px rgba(255, 255, 255, 0.15),
+        2px 2px 0px rgba(0, 0, 0, 0.9);
     }
 
-    .hero-subtitle {
-      font-family: var(--font-mono);
-      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
-      color: var(--purple-neon);
-      text-shadow: 0 0 12px var(--purple-glow);
-      margin-bottom: 1.5rem;
+    .hero-motto-callout {
+      font-family: var(--font-brush);
+      font-size: clamp(1.6rem, 3vw, 2.3rem);
+      color: var(--ink-gold);
+      letter-spacing: 3px;
+      margin-bottom: 1.8rem;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.8rem;
     }
 
-    .typewriter-cursor {
-      display: inline-block;
-      width: 10px;
-      height: 1.2em;
-      background: var(--purple-neon);
-      vertical-align: middle;
-      animation: blinkCursor 0.9s infinite;
+    .hero-poetry-quote {
+      font-size: 1.12rem;
+      color: var(--paper-muted);
+      line-height: 2;
+      max-width: 540px;
+      margin-bottom: 2.6rem;
+      position: relative;
+      padding-left: 1.2rem;
+      border-left: 2px solid rgba(197, 160, 89, 0.4);
     }
 
-    @keyframes blinkCursor {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+    .hero-poetry-quote strong {
+      color: var(--paper-white);
+      font-weight: 600;
     }
 
-    .hero-desc {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      max-width: 520px;
-      margin-bottom: 2.2rem;
-      line-height: 1.7;
-    }
-
-    .hero-desc strong {
-      color: #fff;
-    }
-
-    .hero-cta {
+    .hero-btn-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.2rem;
+      gap: 1.3rem;
     }
 
-    /* Futuristic HUD Buttons */
-    .btn {
+    /* Ink Buttons */
+    .btn-ink {
       position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 0.6rem;
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      padding: 0.85rem 1.8rem;
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      letter-spacing: 2px;
+      padding: 0.8rem 2rem;
       text-decoration: none;
       cursor: pointer;
-      border: none;
-      border-radius: 4px;
-      transition: var(--transition-smooth);
-      clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+      border-radius: 3px;
+      transition: var(--transition);
+      border: 1px solid var(--border-ink);
     }
 
-    .btn-primary {
-      background: var(--cyan-neon);
-      color: #000;
-      box-shadow: 0 0 20px var(--cyan-glow);
+    .btn-ink-primary {
+      background: var(--paper-white);
+      color: #0c0d10;
+      font-weight: 700;
+      box-shadow: 0 4px 18px rgba(255, 255, 255, 0.1);
     }
 
-    .btn-primary:hover {
-      background: #38f8ff;
+    .btn-ink-primary:hover {
+      background: #ffffff;
       transform: translateY(-2px);
-      box-shadow: 0 0 30px rgba(0, 240, 255, 0.7);
+      box-shadow: 0 6px 25px rgba(255, 255, 255, 0.25);
     }
 
-    .btn-secondary {
-      background: rgba(168, 85, 247, 0.1);
-      border: 1px solid var(--purple-neon);
-      color: #fff;
-      box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+    .btn-ink-outline {
+      background: rgba(18, 20, 26, 0.6);
+      color: var(--paper-white);
+      border-color: var(--ink-gold);
     }
 
-    .btn-secondary:hover {
-      background: rgba(168, 85, 247, 0.25);
+    .btn-ink-outline:hover {
+      background: rgba(197, 160, 89, 0.15);
+      border-color: #e5b96a;
       transform: translateY(-2px);
-      box-shadow: 0 0 25px var(--purple-glow);
+      box-shadow: 0 0 20px var(--ink-gold-glow);
     }
 
-    /* Hero Tech Visualizer / Terminal HUD */
-    .hero-visual {
+    /* Ink Scroll / Calligraphy Scroll Card */
+    .scroll-card {
+      background: linear-gradient(145deg, rgba(20, 22, 28, 0.9), rgba(12, 14, 18, 0.85));
+      border: 1px solid var(--border-ink);
+      border-radius: 6px;
+      padding: 2.2rem;
       position: relative;
-    }
-
-    .hud-frame {
-      background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border-cyan);
-      border-radius: 12px;
-      padding: 1.8rem;
-      position: relative;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 240, 255, 0.12);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
       overflow: hidden;
     }
 
-    /* Corner HUD brackets */
-    .hud-corner {
+    /* Decorative Classical Corners */
+    .ink-corner {
       position: absolute;
-      width: 14px;
-      height: 14px;
-      border: 2px solid var(--cyan-neon);
+      width: 12px;
+      height: 12px;
+      border-color: var(--ink-gold);
       pointer-events: none;
+      opacity: 0.7;
     }
-    .hud-corner.tl { top: 6px; left: 6px; border-right: none; border-bottom: none; }
-    .hud-corner.tr { top: 6px; right: 6px; border-left: none; border-bottom: none; }
-    .hud-corner.bl { bottom: 6px; left: 6px; border-right: none; border-top: none; }
-    .hud-corner.br { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+    .ink-corner.tl { top: 8px; left: 8px; border-top: 1.5px solid; border-left: 1.5px solid; }
+    .ink-corner.tr { top: 8px; right: 8px; border-top: 1.5px solid; border-right: 1.5px solid; }
+    .ink-corner.bl { bottom: 8px; left: 8px; border-bottom: 1.5px solid; border-left: 1.5px solid; }
+    .ink-corner.br { bottom: 8px; right: 8px; border-bottom: 1.5px solid; border-right: 1.5px solid; }
 
-    .terminal-header {
+    .scroll-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 0.8rem;
-      margin-bottom: 1.2rem;
+      border-bottom: 1px solid rgba(245, 243, 236, 0.08);
+      padding-bottom: 1rem;
+      margin-bottom: 1.4rem;
     }
 
-    .terminal-dots {
+    .scroll-title {
+      font-family: var(--font-brush);
+      font-size: 1.4rem;
+      color: var(--paper-white);
+      letter-spacing: 2px;
+    }
+
+    .ink-stat-list {
       display: flex;
-      gap: 6px;
-    }
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-    .dot-red { background: #ef4444; }
-    .dot-yellow { background: #f59e0b; }
-    .dot-green { background: #10b981; }
-
-    .terminal-title {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      letter-spacing: 1px;
+      flex-direction: column;
+      gap: 1.1rem;
     }
 
-    .hud-stat-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .hud-stat-box {
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 6px;
-      padding: 0.8rem;
-    }
-
-    .stat-label {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 0.2rem;
-    }
-
-    .stat-val {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      color: var(--cyan-neon);
-      font-weight: 700;
-    }
-
-    .chill-meter {
-      margin-top: 1rem;
-      background: rgba(0, 0, 0, 0.5);
-      border: 1px solid var(--border-subtle);
-      border-radius: 6px;
-      padding: 0.9rem;
-    }
-
-    .chill-bar-label {
+    .stat-row {
       display: flex;
       justify-content: space-between;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      margin-bottom: 0.4rem;
+      align-items: center;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed rgba(245, 243, 236, 0.06);
     }
 
-    .chill-bar-bg {
-      height: 8px;
-      background: #111622;
+    .stat-name {
+      font-size: 0.9rem;
+      color: var(--ink-dim);
+      letter-spacing: 1px;
+    }
+
+    .stat-value {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      color: var(--paper-white);
+    }
+
+    .zen-meter {
+      margin-top: 1.2rem;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.35);
       border-radius: 4px;
-      overflow: hidden;
-      position: relative;
+      border: 1px solid rgba(245, 243, 236, 0.05);
     }
 
-    .chill-bar-fill {
+    .zen-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--paper-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .zen-bar-bg {
+      height: 6px;
+      background: #191c22;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .zen-bar-fill {
       height: 100%;
       width: 100%;
-      background: linear-gradient(90deg, var(--cyan-neon), var(--purple-neon));
-      border-radius: 4px;
-      box-shadow: 0 0 10px var(--cyan-glow);
-      animation: chillFill 2s ease-out forwards;
-    }
-
-    @keyframes chillFill {
-      0% { width: 0%; }
-      100% { width: 100%; }
+      background: linear-gradient(90deg, #3a3f4d, var(--ink-gold), var(--seal-red));
+      border-radius: 3px;
+      box-shadow: 0 0 10px rgba(197, 160, 89, 0.4);
     }
 
     /* =========================================================
-       SECTION COMMON LAYOUT & HEADINGS
+       SECTION LAYOUT & TITLES (各卷章節)
        ========================================================= */
     section {
       padding: 5rem 0;
       position: relative;
     }
 
-    .section-header {
-      margin-bottom: 3rem;
-      text-align: left;
-    }
-
-    .section-tag {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--cyan-neon);
-      letter-spacing: 2px;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .section-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.8rem, 4vw, 2.6rem);
-      font-weight: 900;
-      letter-spacing: 1px;
-      color: #fff;
-    }
-
-    .section-desc {
-      font-size: 1rem;
-      color: var(--text-muted);
-      margin-top: 0.5rem;
-    }
-
-    /* =========================================================
-       SKILL SECTION (彈吉他 - GUITAR HUD & FREQUENCY)
-       ========================================================= */
-    .skill-card {
-      background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border-cyan);
-      border-radius: 12px;
-      padding: 2.5rem;
+    .section-head {
+      margin-bottom: 3.2rem;
       position: relative;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 240, 255, 0.08);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.5rem;
-      align-items: center;
-      transition: var(--transition-smooth);
     }
 
-    .skill-card:hover {
-      border-color: var(--border-cyan-bright);
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 35px rgba(0, 240, 255, 0.2);
-    }
-
-    .skill-info h3 {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      color: #fff;
-      margin-bottom: 0.8rem;
+    .section-chapter {
+      font-family: var(--font-brush);
+      font-size: 1.15rem;
+      color: var(--seal-red);
+      letter-spacing: 3px;
+      margin-bottom: 0.3rem;
       display: flex;
       align-items: center;
-      gap: 0.8rem;
-    }
-
-    .skill-badge {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      padding: 0.2rem 0.6rem;
-      background: rgba(168, 85, 247, 0.15);
-      border: 1px solid var(--purple-neon);
-      color: var(--purple-neon);
-      border-radius: 4px;
-    }
-
-    .skill-desc {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.7;
-    }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
       gap: 0.6rem;
     }
 
-    .tech-tag {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: var(--text-main);
-      padding: 0.3rem 0.8rem;
-      border-radius: 4px;
-      transition: var(--transition-smooth);
+    .section-title {
+      font-family: var(--font-brush);
+      font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+      color: var(--paper-white);
+      letter-spacing: 3px;
+      line-height: 1.2;
     }
 
-    .tech-tag:hover {
-      border-color: var(--cyan-neon);
-      color: var(--cyan-neon);
-      box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-    }
-
-    /* Sound Frequency Audio Visualizer */
-    .visualizer-box {
-      background: rgba(5, 7, 12, 0.9);
-      border: 1px solid rgba(0, 240, 255, 0.25);
-      border-radius: 8px;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 1.2rem;
-      position: relative;
-    }
-
-    .visualizer-top {
-      display: flex;
-      justify-content: space-between;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--text-muted);
-    }
-
-    .equalizer-bars {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      height: 90px;
-      gap: 5px;
-      padding: 0 0.5rem;
-    }
-
-    .eq-bar {
-      flex: 1;
-      background: linear-gradient(to top, var(--cyan-neon), var(--purple-neon));
-      border-radius: 3px 3px 0 0;
-      opacity: 0.85;
-      box-shadow: 0 0 8px var(--cyan-glow);
-      animation: audioWave 1.4s ease-in-out infinite alternate;
-    }
-
-    /* Staggered animation delays for wave feel */
-    .eq-bar:nth-child(1) { height: 35%; animation-delay: 0.1s; }
-    .eq-bar:nth-child(2) { height: 75%; animation-delay: 0.3s; }
-    .eq-bar:nth-child(3) { height: 50%; animation-delay: 0.6s; }
-    .eq-bar:nth-child(4) { height: 90%; animation-delay: 0.2s; }
-    .eq-bar:nth-child(5) { height: 40%; animation-delay: 0.5s; }
-    .eq-bar:nth-child(6) { height: 85%; animation-delay: 0.4s; }
-    .eq-bar:nth-child(7) { height: 60%; animation-delay: 0.7s; }
-    .eq-bar:nth-child(8) { height: 95%; animation-delay: 0.15s; }
-    .eq-bar:nth-child(9) { height: 45%; animation-delay: 0.35s; }
-    .eq-bar:nth-child(10) { height: 70%; animation-delay: 0.55s; }
-    .eq-bar:nth-child(11) { height: 80%; animation-delay: 0.25s; }
-    .eq-bar:nth-child(12) { height: 30%; animation-delay: 0.45s; }
-
-    @keyframes audioWave {
-      0% { transform: scaleY(0.3); opacity: 0.5; }
-      100% { transform: scaleY(1); opacity: 1; box-shadow: 0 0 14px var(--purple-glow); }
-    }
-
-    .guitar-strings {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
+    .section-intro {
+      font-size: 1.05rem;
+      color: var(--paper-muted);
       margin-top: 0.5rem;
+      max-width: 600px;
     }
 
-    .guitar-string {
+    /* Classical Ink Brush Line Divider */
+    .brush-divider {
+      height: 2px;
+      width: 100%;
+      max-width: 280px;
+      background: linear-gradient(90deg, var(--seal-red), var(--ink-gold), transparent);
+      margin: 1.2rem 0;
+      opacity: 0.7;
+    }
+
+    /* =========================================================
+       SECTION 1: 卷一 · 墨客履歷 (ABOUT)
+       ========================================================= */
+    .about-parchment {
+      background: var(--bg-card);
+      border: 1px solid var(--border-ink);
+      border-radius: 6px;
+      padding: 2.8rem;
+      position: relative;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.75);
+      line-height: 2.1;
+      backdrop-filter: blur(12px);
+    }
+
+    .about-quote {
+      font-family: var(--font-brush);
+      font-size: 1.6rem;
+      color: var(--paper-white);
+      margin-bottom: 1.5rem;
+      letter-spacing: 2px;
       display: flex;
       align-items: center;
       gap: 0.8rem;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--text-dim);
     }
 
-    .string-line {
+    .about-content {
+      color: var(--paper-muted);
+      font-size: 1.08rem;
+    }
+
+    .about-content p {
+      margin-bottom: 1.2rem;
+    }
+
+    .about-signature {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 1.2rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed rgba(245, 243, 236, 0.1);
+    }
+
+    /* =========================================================
+       SECTION 2: 卷二 · 六弦琴韻 (SKILL: 彈吉他)
+       ========================================================= */
+    .guitar-sanctuary {
+      background: var(--bg-card);
+      border: 1px solid var(--border-ink);
+      border-radius: 6px;
+      padding: 2.8rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.8rem;
+      align-items: center;
+      position: relative;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      transition: var(--transition);
+    }
+
+    .guitar-sanctuary:hover {
+      border-color: var(--border-ink-active);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(197, 160, 89, 0.1);
+    }
+
+    .guitar-info h3 {
+      font-family: var(--font-brush);
+      font-size: 2.4rem;
+      color: var(--paper-white);
+      margin-bottom: 0.8rem;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .guitar-desc {
+      color: var(--paper-muted);
+      font-size: 1.05rem;
+      line-height: 1.95;
+      margin-bottom: 1.8rem;
+    }
+
+    .ink-chords-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+    }
+
+    .ink-pill {
+      font-family: var(--font-serif);
+      font-size: 0.85rem;
+      color: var(--paper-white);
+      background: rgba(245, 243, 236, 0.04);
+      border: 1px solid rgba(245, 243, 236, 0.12);
+      padding: 0.35rem 0.9rem;
+      border-radius: 3px;
+      transition: var(--transition);
+      letter-spacing: 1px;
+    }
+
+    .ink-pill:hover {
+      border-color: var(--ink-gold);
+      color: var(--ink-gold);
+      background: rgba(197, 160, 89, 0.1);
+    }
+
+    /* Traditional Chinese Style Guitar String Visualizer */
+    .zither-strings-box {
+      background: rgba(10, 12, 16, 0.85);
+      border: 1px solid rgba(245, 243, 236, 0.08);
+      border-radius: 6px;
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .zither-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-serif);
+      font-size: 0.85rem;
+      color: var(--ink-dim);
+      border-bottom: 1px solid rgba(245, 243, 236, 0.06);
+      padding-bottom: 0.6rem;
+    }
+
+    /* Ink Wave Frequencies */
+    .ink-wave-container {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      height: 85px;
+      gap: 6px;
+      padding: 0 0.5rem;
+    }
+
+    .ink-wave-bar {
+      flex: 1;
+      background: linear-gradient(to top, #1e222b, var(--ink-gold), var(--paper-white));
+      border-radius: 2px 2px 0 0;
+      opacity: 0.85;
+      animation: inkWaveAnim 1.6s ease-in-out infinite alternate;
+    }
+
+    .ink-wave-bar:nth-child(1) { height: 35%; animation-delay: 0.1s; }
+    .ink-wave-bar:nth-child(2) { height: 70%; animation-delay: 0.35s; }
+    .ink-wave-bar:nth-child(3) { height: 45%; animation-delay: 0.6s; }
+    .ink-wave-bar:nth-child(4) { height: 95%; animation-delay: 0.15s; }
+    .ink-wave-bar:nth-child(5) { height: 55%; animation-delay: 0.45s; }
+    .ink-wave-bar:nth-child(6) { height: 80%; animation-delay: 0.25s; }
+    .ink-wave-bar:nth-child(7) { height: 40%; animation-delay: 0.7s; }
+    .ink-wave-bar:nth-child(8) { height: 85%; animation-delay: 0.2s; }
+    .ink-wave-bar:nth-child(9) { height: 60%; animation-delay: 0.5s; }
+    .ink-wave-bar:nth-child(10) { height: 75%; animation-delay: 0.3s; }
+
+    @keyframes inkWaveAnim {
+      0% { transform: scaleY(0.3); opacity: 0.4; }
+      100% { transform: scaleY(1); opacity: 0.95; }
+    }
+
+    .strings-six {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-top: 0.4rem;
+    }
+
+    .string-row {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      font-size: 0.8rem;
+      color: var(--ink-dim);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .string-silk {
       flex: 1;
       height: 1px;
-      background: linear-gradient(90deg, rgba(0, 240, 255, 0.4), rgba(255, 255, 255, 0.15), rgba(0, 240, 255, 0.4));
-      position: relative;
+      background: linear-gradient(90deg, rgba(245, 243, 236, 0.4), rgba(197, 160, 89, 0.2), rgba(245, 243, 236, 0.4));
+      transition: var(--transition);
     }
 
-    .guitar-string:hover .string-line {
-      background: var(--cyan-neon);
-      box-shadow: 0 0 8px var(--cyan-neon);
+    .string-row:hover {
+      color: var(--ink-gold);
+    }
+
+    .string-row:hover .string-silk {
+      background: var(--ink-gold);
+      box-shadow: 0 0 10px var(--ink-gold);
       height: 2px;
     }
 
     /* =========================================================
-       INTERESTS SECTION (AET, PLAY VIDEO GAME, WATCH FILM)
+       SECTION 3: 卷三 · 浮生三好 (INTERESTS: AET, GAME, FILM)
        ========================================================= */
-    .interests-grid {
+    .passions-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.8rem;
     }
 
-    .interest-card {
+    .passion-card {
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      padding: 2.2rem 1.8rem;
-      position: relative;
+      border: 1px solid var(--border-ink);
+      border-radius: 6px;
+      padding: 2.4rem 1.9rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: var(--transition-smooth);
+      position: relative;
+      transition: var(--transition);
       overflow: hidden;
+      backdrop-filter: blur(12px);
     }
 
-    .interest-card::before {
+    .passion-card::after {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 3px;
-      background: linear-gradient(90deg, transparent, var(--cyan-neon), transparent);
+      background: linear-gradient(90deg, transparent, var(--ink-gold), transparent);
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.4s ease;
     }
 
-    .interest-card:hover {
-      border-color: var(--border-cyan);
-      transform: translateY(-6px);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 240, 255, 0.15);
+    .passion-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--border-ink-active);
       background: var(--bg-card-hover);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85);
     }
 
-    .interest-card:hover::before {
+    .passion-card:hover::after {
       opacity: 1;
     }
 
-    .interest-icon-hud {
-      width: 52px;
-      height: 52px;
-      border-radius: 8px;
-      background: rgba(0, 240, 255, 0.08);
-      border: 1px solid var(--border-cyan);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      margin-bottom: 1.4rem;
-      color: var(--cyan-neon);
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
-    }
-
-    .interest-card:nth-child(2) .interest-icon-hud {
-      background: rgba(168, 85, 247, 0.08);
-      border-color: var(--purple-neon);
-      color: var(--purple-neon);
-      box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
-    }
-
-    .interest-card:nth-child(3) .interest-icon-hud {
-      background: rgba(0, 255, 170, 0.08);
-      border-color: var(--emerald-neon);
-      color: var(--emerald-neon);
-      box-shadow: 0 0 15px rgba(0, 255, 170, 0.15);
-    }
-
-    .interest-index {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      margin-bottom: 0.3rem;
-    }
-
-    .interest-title {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      color: #fff;
-      margin-bottom: 0.8rem;
-      letter-spacing: 0.5px;
-    }
-
-    .interest-text {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
-      margin-bottom: 1.4rem;
-    }
-
-    .interest-footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      padding-top: 0.9rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--text-dim);
-    }
-
-    .status-ok {
-      color: var(--emerald-neon);
-    }
-
-    /* =========================================================
-       PROJECTS / ACTIVITIES SECTION (QUEST LOG - STATUS: CLEAN SLATE)
-       ========================================================= */
-    .quest-console {
-      background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border-subtle);
-      border-radius: 12px;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
-      overflow: hidden;
-      position: relative;
-    }
-
-    .console-bar {
-      background: rgba(10, 14, 22, 0.9);
-      padding: 0.8rem 1.4rem;
-      border-bottom: 1px solid var(--border-subtle);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .console-title {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--cyan-neon);
-      letter-spacing: 1px;
-    }
-
-    .console-body {
-      padding: 2.2rem;
-      font-family: var(--font-mono);
-    }
-
-    .terminal-line {
-      display: flex;
-      gap: 0.8rem;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-      align-items: flex-start;
-      line-height: 1.6;
-    }
-
-    .term-prompt {
-      color: var(--cyan-neon);
+    .passion-chinese-num {
+      font-family: var(--font-brush);
+      font-size: 2.2rem;
+      color: rgba(245, 243, 236, 0.15);
+      position: absolute;
+      top: 1.2rem;
+      right: 1.5rem;
       user-select: none;
     }
 
-    .term-cmd {
-      color: #fff;
-    }
-
-    .term-output {
-      color: var(--text-muted);
-      padding-left: 1.8rem;
-      margin-bottom: 1.5rem;
-      font-size: 0.9rem;
-      line-height: 1.7;
-    }
-
-    .clean-slate-box {
-      background: rgba(0, 240, 255, 0.03);
-      border: 1px dashed var(--border-cyan);
-      border-radius: 8px;
-      padding: 2rem;
-      text-align: center;
-      margin-top: 1.5rem;
-    }
-
-    .clean-slate-icon {
-      font-size: 2.2rem;
-      color: var(--cyan-neon);
-      margin-bottom: 0.6rem;
-      text-shadow: 0 0 15px var(--cyan-glow);
-    }
-
-    .clean-slate-title {
-      font-family: var(--font-display);
+    .passion-icon-frame {
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(197, 160, 89, 0.3);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 1.3rem;
-      color: #fff;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+      background: rgba(197, 160, 89, 0.08);
+      color: var(--ink-gold);
     }
 
-    .clean-slate-desc {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      max-width: 500px;
-      margin: 0 auto 1.2rem;
+    .passion-card:nth-child(2) .passion-icon-frame {
+      border-color: rgba(201, 59, 43, 0.35);
+      background: rgba(201, 59, 43, 0.08);
+      color: var(--seal-red);
+    }
+
+    .passion-tag-en {
+      font-family: var(--font-en);
+      font-size: 0.8rem;
+      color: var(--ink-gold);
+      letter-spacing: 2px;
+      margin-bottom: 0.3rem;
+    }
+
+    .passion-title {
+      font-family: var(--font-brush);
+      font-size: 1.7rem;
+      color: var(--paper-white);
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+    }
+
+    .passion-text {
+      color: var(--paper-muted);
+      font-size: 0.98rem;
+      line-height: 1.9;
+      margin-bottom: 1.5rem;
+    }
+
+    .passion-bottom {
+      border-top: 1px dashed rgba(245, 243, 236, 0.08);
+      padding-top: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: var(--ink-dim);
     }
 
     /* =========================================================
-       CONTACT / SIGNAL SECTION
+       SECTION 4: 卷四 · 白紙初啟 (QUEST LOG: 無)
        ========================================================= */
-    .contact-card {
-      background: linear-gradient(135deg, rgba(13, 17, 24, 0.9), rgba(20, 26, 38, 0.85));
-      border: 1px solid var(--border-cyan);
-      border-radius: 16px;
+    .zen-slate-box {
+      background: var(--bg-card);
+      border: 1px dashed rgba(245, 243, 236, 0.18);
+      border-radius: 6px;
       padding: 3.5rem 2rem;
       text-align: center;
       position: relative;
-      overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 240, 255, 0.15);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
     }
 
-    .contact-card::after {
-      content: '';
+    .zen-slate-seal {
+      margin-bottom: 1.2rem;
+      display: inline-block;
+    }
+
+    .zen-slate-title {
+      font-family: var(--font-brush);
+      font-size: 2.2rem;
+      color: var(--paper-white);
+      margin-bottom: 0.9rem;
+      letter-spacing: 3px;
+    }
+
+    .zen-slate-desc {
+      color: var(--paper-muted);
+      font-size: 1.08rem;
+      max-width: 620px;
+      margin: 0 auto 1.8rem;
+      line-height: 2;
+    }
+
+    .zen-quote-pill {
+      display: inline-block;
+      font-family: var(--font-brush);
+      font-size: 1.2rem;
+      color: var(--ink-gold);
+      background: rgba(197, 160, 89, 0.08);
+      border: 1px solid rgba(197, 160, 89, 0.25);
+      padding: 0.4rem 1.6rem;
+      border-radius: 30px;
+      letter-spacing: 2px;
+    }
+
+    /* =========================================================
+       SECTION 5: 卷五 · 孤舟逢友 (CONTACT)
+       ========================================================= */
+    .contact-pavilion {
+      background: linear-gradient(145deg, rgba(20, 23, 30, 0.9), rgba(12, 14, 18, 0.92));
+      border: 1px solid var(--border-ink);
+      border-radius: 8px;
+      padding: 3.8rem 2rem;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+      overflow: hidden;
+    }
+
+    .contact-pavilion::before {
+      content: '132';
       position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(0, 240, 255, 0.06) 0%, transparent 60%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-brush);
+      font-size: 18rem;
+      color: rgba(245, 243, 236, 0.02);
       pointer-events: none;
+      user-select: none;
     }
 
     .contact-title {
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      color: #fff;
+      font-family: var(--font-brush);
+      font-size: clamp(2.2rem, 5vw, 3.2rem);
+      color: var(--paper-white);
       margin-bottom: 1rem;
+      letter-spacing: 3px;
     }
 
     .contact-text {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      max-width: 580px;
-      margin: 0 auto 2.2rem;
-      line-height: 1.7;
+      color: var(--paper-muted);
+      font-size: 1.12rem;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+      line-height: 2;
     }
 
-    .ping-box {
+    .ink-ping-cluster {
       display: inline-flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
+      gap: 1.2rem;
     }
 
-    .toast-hud {
+    .ink-toast {
       display: none;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      background: rgba(0, 255, 170, 0.15);
-      border: 1px solid var(--emerald-neon);
-      color: var(--emerald-neon);
-      padding: 0.6rem 1.4rem;
-      border-radius: 6px;
-      box-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
-      animation: fadeIn 0.3s ease;
+      font-family: var(--font-brush);
+      font-size: 1.15rem;
+      letter-spacing: 2px;
+      background: rgba(201, 59, 43, 0.15);
+      border: 1px solid var(--seal-red);
+      color: #ff8577;
+      padding: 0.6rem 1.8rem;
+      border-radius: 4px;
+      box-shadow: 0 0 20px var(--seal-red-glow);
+      animation: inkToastIn 0.4s ease;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+    @keyframes inkToastIn {
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
     /* =========================================================
-       FOOTER
+       FOOTER (結語 · 歲月靜好)
        ========================================================= */
     footer {
-      border-top: 1px solid var(--border-subtle);
+      border-top: 1px solid rgba(245, 243, 236, 0.08);
       padding: 3rem 0;
       margin-top: 4rem;
       position: relative;
@@ -1009,30 +955,24 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 1.5rem;
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--text-dim);
+      font-size: 0.9rem;
+      color: var(--ink-dim);
     }
 
     .footer-brand {
-      color: #fff;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-
-    .footer-status {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      font-family: var(--font-brush);
+      font-size: 1.4rem;
+      color: var(--paper-white);
+      letter-spacing: 2px;
     }
 
     /* =========================================================
-       SCROLL REVEAL ANIMATIONS (Fade-in on Scroll)
+       SCROLL REVEAL ANIMATIONS (淡入淡出水墨韻味)
        ========================================================= */
     .reveal {
       opacity: 0;
-      transform: translateY(35px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transform: translateY(32px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
       will-change: opacity, transform;
     }
 
@@ -1041,42 +981,35 @@
       transform: translateY(0);
     }
 
-    /* Staggered transition helper */
     .delay-1 { transition-delay: 0.15s; }
     .delay-2 { transition-delay: 0.3s; }
     .delay-3 { transition-delay: 0.45s; }
 
     /* =========================================================
-       RESPONSIVE BREAKPOINTS (Mobile & Tablet)
+       RESPONSIVE BREAKPOINTS (手機與平板自適應)
        ========================================================= */
     @media (max-width: 900px) {
       .hero {
         grid-template-columns: 1fr;
         padding: 3.5rem 0 2rem;
-        gap: 2.5rem;
-        text-align: left;
+        gap: 2.8rem;
       }
-      
-      .skill-card {
+
+      .guitar-sanctuary {
         grid-template-columns: 1fr;
-        padding: 1.8rem;
+        padding: 2rem;
         gap: 2rem;
       }
 
-      .interests-grid {
+      .passions-grid {
         grid-template-columns: 1fr;
-        gap: 1.2rem;
-      }
-
-      .hud-stat-grid {
-        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
       }
     }
 
     @media (max-width: 768px) {
-      .navbar {
-        position: relative;
-        top: 0;
+      .ink-navbar {
+        padding: 0.8rem 1.2rem;
         margin: 1rem 0;
       }
 
@@ -1087,13 +1020,13 @@
         left: 0;
         right: 0;
         margin-top: 0.5rem;
-        background: rgba(10, 14, 22, 0.98);
-        border: 1px solid var(--border-cyan);
-        border-radius: 8px;
+        background: rgba(14, 16, 20, 0.98);
+        border: 1px solid var(--border-ink);
+        border-radius: 4px;
         flex-direction: column;
-        padding: 1.2rem;
+        padding: 1.2rem 1.5rem;
         gap: 1.2rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.95);
       }
 
       .nav-menu.open {
@@ -1104,16 +1037,16 @@
         display: block;
       }
 
-      .hero-title {
-        font-size: 3.5rem;
+      .hero-title-brush {
+        font-size: 4rem;
       }
 
-      .hero-cta {
+      .hero-btn-group {
         flex-direction: column;
         width: 100%;
       }
 
-      .btn {
+      .btn-ink {
         width: 100%;
       }
 
@@ -1126,347 +1059,331 @@
 </head>
 <body>
 
-  <!-- Ambient Interactive Canvas (Futuristic Cyber Particles) -->
-  <canvas id="cyber-canvas"></canvas>
+  <!-- Background Interactive Ink Particles Canvas (水墨煙嵐) -->
+  <canvas id="ink-canvas"></canvas>
 
-  <!-- High-tech Grid & Scanline FX -->
-  <div class="grid-overlay"></div>
-  <div class="scanline"></div>
+  <!-- Xuan Paper Texture Overlay (宣紙暗紋) -->
+  <div class="paper-texture"></div>
 
-  <div class="page-wrapper">
+  <div class="ink-wrapper">
 
-    <!-- NAVIGATION HUD -->
-    <header class="navbar">
-      <a href="#" class="nav-brand">
-        <span class="brand-glitch">132</span>
-        <div class="brand-badge">
-          <div class="pulse-dot"></div>
-          <span>SYS.ONLINE</span>
-        </div>
+    <!-- NAVIGATION BAR (墨竹長廊) -->
+    <header class="ink-navbar">
+      <a href="#" class="nav-brand-group">
+        <span class="brand-calligraphy">壹參貳</span>
+        <span class="seal-stamp seal-round">chill</span>
       </a>
 
-      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
-        // MENU
+      <button class="menu-toggle" id="menuToggle" aria-label="切換選單">
+        卷軸目錄
       </button>
 
       <ul class="nav-menu" id="navMenu">
-        <li><a href="#about" class="nav-link"><span>01</span>// 關於我</a></li>
-        <li><a href="#skills" class="nav-link"><span>02</span>// 技能矩陣</a></li>
-        <li><a href="#interests" class="nav-link"><span>03</span>// 興趣模組</a></li>
-        <li><a href="#quests" class="nav-link"><span>04</span>// 任務歷程</a></li>
-        <li><a href="#contact" class="nav-link"><span>05</span>// 頻率連線</a></li>
+        <li><a href="#about" class="nav-link"><span>卷一</span>墨客履歷</a></li>
+        <li><a href="#skills" class="nav-link"><span>卷二</span>六弦琴韻</a></li>
+        <li><a href="#interests" class="nav-link"><span>卷三</span>浮生三好</a></li>
+        <li><a href="#quests" class="nav-link"><span>卷四</span>白紙初啟</a></li>
+        <li><a href="#contact" class="nav-link"><span>卷五</span>孤舟逢友</a></li>
       </ul>
     </header>
 
     <main>
-      <!-- HERO SECTION -->
+      <!-- HERO SECTION: 墨客迎風 -->
       <section class="hero" id="hero">
-        <div class="hero-content reveal">
-          <div class="cyber-pill">
-            <span style="color: var(--emerald-neon);">●</span> PROTOCOL // CHILL GUY DETECTED
+        <div class="hero-left reveal">
+          <div class="hero-badge-tag">
+            <span class="seal-stamp" style="font-size: 0.9rem; padding: 0.15rem 0.4rem;">幽居</span>
+            <span>// CHILL GUY · 行雲流水</span>
           </div>
-          <h1 class="hero-title">
-            I AM <span class="glow-cyan">132</span>
-          </h1>
-          <div class="hero-subtitle">
-            <span>//</span>
-            <span id="typewriterText">chill guy</span>
-            <span class="typewriter-cursor"></span>
+
+          <div class="hero-name-row">
+            <h1 class="hero-title-brush">132</h1>
+            <span class="seal-stamp" style="font-size: 1.4rem; padding: 0.4rem 0.6rem;">閒人</span>
           </div>
-          <p class="hero-desc">
-            在喧囂的世界裡，維持最放鬆的運作頻率。<br>
-            喜歡<strong>彈吉他</strong>、沉浸於<strong>AET</strong>、探索<strong>電玩宇宙</strong>與品味<strong>光影電影</strong>。
+
+          <div class="hero-motto-callout">
+            <span>「chill guy」</span>
+            <span style="font-size: 1.2rem; color: var(--paper-muted); font-family: var(--font-serif);">· 漫步凡塵</span>
+          </div>
+
+          <p class="hero-poetry-quote">
+            行到水窮處，坐看雲起時。<br>
+            在黑白交織的墨韻世界裡，維持一份不疾不徐的<strong>超然步調</strong>。<br>
+            撫<strong>六弦吉他</strong>之清音，寄情<strong>美學藝術</strong>，縱情<strong>方寸電玩</strong>，閱盡<strong>銀幕光影</strong>。
           </p>
-          <div class="hero-cta">
-            <a href="#skills" class="btn btn-primary">
-              <span>INITIALIZE PROFILE</span>
+
+          <div class="hero-btn-group">
+            <a href="#skills" class="btn-ink btn-ink-primary">
+              <span>閱覽琴藝檔案</span>
               <span>→</span>
             </a>
-            <a href="#contact" class="btn btn-secondary">
-              <span>SEND TRANSMISSION</span>
+            <a href="#contact" class="btn-ink btn-ink-outline">
+              <span>叩訪問候</span>
             </a>
           </div>
         </div>
 
-        <!-- HERO HUD DISPLAY -->
-        <div class="hero-visual reveal delay-1">
-          <div class="hud-frame">
-            <div class="hud-corner tl"></div>
-            <div class="hud-corner tr"></div>
-            <div class="hud-corner bl"></div>
-            <div class="hud-corner br"></div>
+        <!-- HERO RIGHT SCROLL (古典卷軸日誌) -->
+        <div class="hero-right reveal delay-1">
+          <div class="scroll-card">
+            <div class="ink-corner tl"></div>
+            <div class="ink-corner tr"></div>
+            <div class="ink-corner bl"></div>
+            <div class="ink-corner br"></div>
 
-            <div class="terminal-header">
-              <div class="terminal-dots">
-                <div class="dot dot-red"></div>
-                <div class="dot dot-yellow"></div>
-                <div class="dot dot-green"></div>
-              </div>
-              <div class="terminal-title">IDENTITY_SCANNER.EXE</div>
+            <div class="scroll-header">
+              <span class="scroll-title">墨客印照</span>
+              <span class="seal-stamp" style="font-size: 0.85rem;">知白守黑</span>
             </div>
 
-            <div class="hud-stat-grid">
-              <div class="hud-stat-box">
-                <div class="stat-label">USER ID</div>
-                <div class="stat-val">132</div>
+            <div class="ink-stat-list">
+              <div class="stat-row">
+                <span class="stat-name">墨名</span>
+                <span class="stat-value" style="font-family: var(--font-brush); font-size: 1.3rem;">132</span>
               </div>
-              <div class="hud-stat-box">
-                <div class="stat-label">ARCHETYPE</div>
-                <div class="stat-val" style="color: var(--purple-neon); font-size: 1rem;">CHILL GUY</div>
+              <div class="stat-row">
+                <span class="stat-name">本心境界</span>
+                <span class="stat-value" style="color: var(--ink-gold); font-family: var(--font-brush); font-size: 1.2rem;">chill guy</span>
               </div>
-              <div class="hud-stat-box">
-                <div class="stat-label">SYSTEM VIBE</div>
-                <div class="stat-val" style="color: var(--emerald-neon);">99.9%</div>
+              <div class="stat-row">
+                <span class="stat-name">本色</span>
+                <span class="stat-value">黑 (焦墨 / 純墨)</span>
               </div>
-              <div class="hud-stat-box">
-                <div class="stat-label">STATUS</div>
-                <div class="stat-val">ACTIVE</div>
+              <div class="stat-row">
+                <span class="stat-name">專精意境</span>
+                <span class="stat-value">彈吉他 (六弦流轉)</span>
               </div>
-            </div>
-
-            <div class="chill-meter">
-              <div class="chill-bar-label">
-                <span style="color: var(--text-muted);">RELAXATION QUOTIENT</span>
-                <span style="color: var(--cyan-neon); font-family: var(--font-mono);">MAXIMUM</span>
-              </div>
-              <div class="chill-bar-bg">
-                <div class="chill-bar-fill"></div>
+              <div class="stat-row">
+                <span class="stat-name">浮生三好</span>
+                <span class="stat-value" style="color: var(--paper-muted); font-size: 0.85rem;">aet · 遊戲 · 電影</span>
               </div>
             </div>
 
-            <div style="margin-top: 1rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim);">
-              > COORDINATES: 25.0330° N, 121.5654° E<br>
-              > ENCRYPTION: QUANTUM_CHILL_v2.0
+            <div class="zen-meter">
+              <div class="zen-label">
+                <span>悠閒度 (Chill Vibe)</span>
+                <span style="font-family: var(--font-brush); color: var(--seal-red); font-size: 1.1rem;">心如止水 · 滿溢</span>
+              </div>
+              <div class="zen-bar-bg">
+                <div class="zen-bar-fill"></div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ABOUT SECTION -->
+      <!-- SECTION 1: 卷一 · 墨客履歷 (ABOUT) -->
       <section id="about">
-        <div class="section-header reveal">
-          <div class="section-tag">// 01. CORE IDENTITY</div>
-          <h2 class="section-title">關於 132</h2>
-          <p class="section-desc">保持從容不迫的生活哲學，在極致科技感中尋找純粹的平靜。</p>
+        <div class="section-head reveal">
+          <div class="section-chapter">卷一 · 自我介紹</div>
+          <h2 class="section-title">墨客履歷 · 132</h2>
+          <div class="brush-divider"></div>
+          <p class="section-intro">天地有大美而不言，安步當車，隨遇而安。</p>
         </div>
 
-        <div class="quest-console reveal">
-          <div class="console-bar">
-            <span class="console-title">// TERMINAL: BIO_MODULE.log</span>
-            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--emerald-neon);">[SYNCED]</span>
+        <div class="about-parchment reveal">
+          <div class="about-quote">
+            <span class="seal-stamp" style="font-size: 1rem;">語錄</span>
+            <span>「做一個從容自得的 chill guy。」</span>
           </div>
-          <div class="console-body">
-            <div class="terminal-line">
-              <span class="term-prompt">user@132-terminal:~$</span>
-              <span class="term-cmd">cat about_me.json</span>
-            </div>
-            <div class="term-output">
-{<br>
-&nbsp;&nbsp;<span style="color: var(--cyan-neon);">"name"</span>: <span style="color: #fff;">"132"</span>,<br>
-&nbsp;&nbsp;<span style="color: var(--cyan-neon);">"motto"</span>: <span style="color: #fff;">"chill guy"</span>,<br>
-&nbsp;&nbsp;<span style="color: var(--cyan-neon);">"style_preference"</span>: <span style="color: #fff;">"科技感 / OLED Deep Black"</span>,<br>
-&nbsp;&nbsp;<span style="color: var(--cyan-neon);">"current_focus"</span>: <span style="color: #fff;">"弦音頻率探索 (彈吉他) & 多元感官體驗"</span>,<br>
-&nbsp;&nbsp;<span style="color: var(--cyan-neon);">"life_rule"</span>: <span style="color: var(--purple-neon);">"不急不躁，用最 chill 的步調把每件事做到最好。"</span><br>
-}
-            </div>
-            <div class="terminal-line">
-              <span class="term-prompt">user@132-terminal:~$</span>
-              <span class="term-cmd" style="color: var(--emerald-neon);">echo "Status: 穩定運作中，準備迎接更多未知。"</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- SKILLS SECTION (彈吉他) -->
-      <section id="skills">
-        <div class="section-header reveal">
-          <div class="section-tag">// 02. SKILL MATRIX</div>
-          <h2 class="section-title">擅長與想學的技能</h2>
-          <p class="section-desc">以音符編織頻率，專注於六弦之上的旋律構建。</p>
-        </div>
-
-        <div class="skill-card reveal">
-          <div class="skill-info">
-            <div class="skill-badge">AUDIO PROTOCOL</div>
-            <h3>彈吉他 <span style="font-size: 1.2rem; color: var(--cyan-neon);">GUITAR</span></h3>
-            <p class="skill-desc">
-              不論是清脆乾淨的木吉他指彈，還是充滿能量的電吉他破音，吉他是我調劑心靈與探索聲學美感的重要核心。目前正持續精進音階邏輯、和弦進行與節奏律動。
+          <div class="about-content">
+            <p>
+              我是 132。生活於繁華喧囂之境，卻始終偏愛一隅黑白水墨的澄澈與留白。
             </p>
-            <div class="skill-tags">
-              <span class="tech-tag"># 指彈演奏 (Fingerstyle)</span>
-              <span class="tech-tag"># 和弦律動 (Chords & Groove)</span>
-              <span class="tech-tag"># 音色調校 (Acoustic / Electric)</span>
-              <span class="tech-tag"># 節奏感 (BPM Synchronizer)</span>
+            <p>
+              「chill guy」不僅僅是一句自述，更是一種沉澱心靈的生活心法——面對風浪不起漣漪，面對日常專注所愛。
+              在墨色深淺之間，用六弦吉他彈奏心中的山水，在藝術美學（aet）中捕捉天地靈感，在電玩與電影的幻境裡體驗百種人生。
+            </p>
+          </div>
+          <div class="about-signature">
+            <span style="font-family: var(--font-brush); font-size: 1.3rem; color: var(--paper-white);">歲月長流 · 132 題</span>
+            <span class="seal-stamp">心安</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: 卷二 · 六弦琴韻 (SKILL: 彈吉他) -->
+      <section id="skills">
+        <div class="section-head reveal">
+          <div class="section-chapter">卷二 · 技藝之境</div>
+          <h2 class="section-title">六弦琴韻 · 彈吉他</h2>
+          <div class="brush-divider"></div>
+          <p class="section-intro">指尖撥動六道絲弦，於虛空之中勾勒出無形的山水清音。</p>
+        </div>
+
+        <div class="guitar-sanctuary reveal">
+          <div class="guitar-info">
+            <span class="seal-stamp" style="font-size: 0.9rem; margin-bottom: 0.8rem;">絲竹弄音</span>
+            <h3>彈吉他 <span style="font-size: 1.1rem; color: var(--ink-gold); font-family: var(--font-serif); font-weight: normal;">(GUITAR)</span></h3>
+            <p class="guitar-desc">
+              不論是木吉他的清澈指彈，亦或電吉他的破空長鳴，皆如揮毫點墨，各有神韻。
+              目前正精進於和弦編織、音色掌控與指尖的節奏觸感，讓每一次撥弦都能傳遞純粹的心境。
+            </p>
+            <div class="ink-chords-tags">
+              <span class="ink-pill">指彈微瀾 (Fingerstyle)</span>
+              <span class="ink-pill">音律和弦 (Chords Progress)</span>
+              <span class="ink-pill">木電兼修 (Acoustic / Electric)</span>
+              <span class="ink-pill">悠然節拍 (Chill Groove)</span>
             </div>
           </div>
 
-          <div class="visualizer-box">
-            <div class="visualizer-top">
-              <span>FREQUENCY: 440 Hz (STANDARD A)</span>
-              <span style="color: var(--cyan-neon);">TUNING: E A D G B E</span>
+          <div class="zither-strings-box">
+            <div class="zither-head">
+              <span>律動波形 (440Hz 撫弦頻率)</span>
+              <span style="color: var(--ink-gold);">標準定弦：E A D G B E</span>
             </div>
 
-            <!-- Dynamic Equalizer Bars -->
-            <div class="equalizer-bars">
-              <div class="eq-bar"></div>
-              <div class="eq-bar"></div>
-              <div class="eq-bar"></div>
-              <div class="eq-bar"></div>
-              <div class="eq-bar"></div>
-              <div class="eq-bar"></div>
-              <div class="eq-bar"></div>
-              <div class="eq-bar"></div>
-              <div class="eq-bar"></div>
-              <div class="eq-bar"></div>
-              <div class="eq-bar"></div>
-              <div class="eq-bar"></div>
+            <!-- Dynamic Ink Wave Equalizer -->
+            <div class="ink-wave-container">
+              <div class="ink-wave-bar"></div>
+              <div class="ink-wave-bar"></div>
+              <div class="ink-wave-bar"></div>
+              <div class="ink-wave-bar"></div>
+              <div class="ink-wave-bar"></div>
+              <div class="ink-wave-bar"></div>
+              <div class="ink-wave-bar"></div>
+              <div class="ink-wave-bar"></div>
+              <div class="ink-wave-bar"></div>
+              <div class="ink-wave-bar"></div>
             </div>
 
-            <!-- 6 Guitar Strings Interactive Visual -->
-            <div class="guitar-strings">
-              <div class="guitar-string"><span>E6</span><div class="string-line"></div></div>
-              <div class="guitar-string"><span>A5</span><div class="string-line"></div></div>
-              <div class="guitar-string"><span>D4</span><div class="string-line"></div></div>
-              <div class="guitar-string"><span>G3</span><div class="string-line"></div></div>
-              <div class="guitar-string"><span>B2</span><div class="string-line"></div></div>
-              <div class="guitar-string"><span>E1</span><div class="string-line"></div></div>
+            <!-- 6 Guitar Strings Classical Interactive Display -->
+            <div class="strings-six">
+              <div class="string-row"><span>陸弦 (E6)</span><div class="string-silk"></div></div>
+              <div class="string-row"><span>伍弦 (A5)</span><div class="string-silk"></div></div>
+              <div class="string-row"><span>肆弦 (D4)</span><div class="string-silk"></div></div>
+              <div class="string-row"><span>參弦 (G3)</span><div class="string-silk"></div></div>
+              <div class="string-row"><span>貳弦 (B2)</span><div class="string-silk"></div></div>
+              <div class="string-row"><span>壹弦 (E1)</span><div class="string-silk"></div></div>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- INTERESTS SECTION (aet, play video game, watch film) -->
+      <!-- SECTION 3: 卷三 · 浮生三好 (INTERESTS: AET, GAME, FILM) -->
       <section id="interests">
-        <div class="section-header reveal">
-          <div class="section-tag">// 03. SUBROUTINES & PASSIONS</div>
-          <h2 class="section-title">核心興趣模組</h2>
-          <p class="section-desc">生活的三大支柱：美學感知、虛擬挑戰與光影故事。</p>
+        <div class="section-head reveal">
+          <div class="section-chapter">卷三 · 浮生三好</div>
+          <h2 class="section-title">心之所向 · 興趣模組</h2>
+          <div class="brush-divider"></div>
+          <p class="section-intro">寄情於丹青、暢遊於虛境、沉浸於光影。</p>
         </div>
 
-        <div class="interests-grid">
-          <!-- Interest 1: aet -->
-          <div class="interest-card reveal delay-1">
+        <div class="passions-grid">
+          <!-- 01. AET -->
+          <div class="passion-card reveal delay-1">
+            <div class="passion-chinese-num">壹</div>
             <div>
-              <div class="interest-icon-hud">🎨</div>
-              <div class="interest-index">MODULE // 01</div>
-              <h3 class="interest-title">AET</h3>
-              <p class="interest-text">
-                探索美學（Art & Aesthetics）的細微脈絡。對視覺構圖、前衛設計、色彩搭配與極簡科技感有著敏銳的直覺與熱情。
+              <div class="passion-icon-frame">🖌️</div>
+              <div class="passion-tag-en">AESTHETICS & ART</div>
+              <h3 class="passion-title">AET · 造物美學</h3>
+              <p class="passion-text">
+                對線條、留白與色彩感知抱持敏銳直覺。熱愛探尋事物最純粹的美感構圖，在現代與古典的交會中淬鍊視覺詩意。
               </p>
             </div>
-            <div class="interest-footer">
-              <span>TAG: SENSORY_ART</span>
-              <span class="status-ok">● ACTIVE</span>
+            <div class="passion-bottom">
+              <span>意境：墨分五色</span>
+              <span class="seal-stamp" style="font-size: 0.75rem; padding: 0.15rem 0.35rem;">賞心</span>
             </div>
           </div>
 
-          <!-- Interest 2: play video game -->
-          <div class="interest-card reveal delay-2">
+          <!-- 02. PLAY VIDEO GAME -->
+          <div class="passion-card reveal delay-2">
+            <div class="passion-chinese-num">貳</div>
             <div>
-              <div class="interest-icon-hud">🎮</div>
-              <div class="interest-index">MODULE // 02</div>
-              <h3 class="interest-title">PLAY VIDEO GAME</h3>
-              <p class="interest-text">
-                在虛擬世界中漫遊冒險，享受反應力的考驗、沉浸式劇情的撼動與策略佈局的成就感，是放鬆心靈的絕佳殿堂。
+              <div class="passion-icon-frame">🎮</div>
+              <div class="passion-tag-en">VIRTUAL ODYSSEY</div>
+              <h3 class="passion-title">PLAY VIDEO GAME</h3>
+              <p class="passion-text">
+                在方寸螢幕中漫步大千世界，享受虛擬江湖的快意恩仇、反應策略的淋漓盡致，於遊戲宇宙裡探尋另一種自在。
               </p>
             </div>
-            <div class="interest-footer">
-              <span>TAG: CYBER_GAMING</span>
-              <span class="status-ok">● ONLINE</span>
+            <div class="passion-bottom">
+              <span>心境：快意仗劍</span>
+              <span class="seal-stamp" style="font-size: 0.75rem; padding: 0.15rem 0.35rem;">遊歷</span>
             </div>
           </div>
 
-          <!-- Interest 3: watch film -->
-          <div class="interest-card reveal delay-3">
+          <!-- 03. WATCH FILM -->
+          <div class="passion-card reveal delay-3">
+            <div class="passion-chinese-num">參</div>
             <div>
-              <div class="interest-icon-hud">🎬</div>
-              <div class="interest-index">MODULE // 03</div>
-              <h3 class="interest-title">WATCH FILM</h3>
-              <p class="interest-text">
-                喜愛光影交織的故事敘述。透過兩小時的銀幕篇章走進不同時空與人生，從導演鏡頭與配樂中汲取深度思考與靈感。
+              <div class="passion-icon-frame">🎬</div>
+              <div class="passion-tag-en">CINEMATIC DREAMS</div>
+              <h3 class="passion-title">WATCH FILM · 光影長河</h3>
+              <p class="passion-text">
+                浮生如夢，萬化皆虛。在兩刻鐘的光影投射間閱盡百轉千迴的人間故事，自鏡頭與配樂中汲取深邃的靈魂共鳴。
               </p>
             </div>
-            <div class="interest-footer">
-              <span>TAG: CINEMA_ARCHIVE</span>
-              <span class="status-ok">● STREAMING</span>
+            <div class="passion-bottom">
+              <span>境界：鏡花水月</span>
+              <span class="seal-stamp" style="font-size: 0.75rem; padding: 0.15rem 0.35rem;">品味</span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- QUESTS & ACTIVITIES SECTION (做過的作品或參加過的活動：無) -->
+      <!-- SECTION 4: 卷四 · 白紙初啟 (QUEST LOG: 無) -->
       <section id="quests">
-        <div class="section-header reveal">
-          <div class="section-tag">// 04. ADVENTURE LOG</div>
-          <h2 class="section-title">做過的作品或活動</h2>
-          <p class="section-desc">以乾淨透明的狀態出發，等待解鎖第一個傳奇任務。</p>
+        <div class="section-head reveal">
+          <div class="section-chapter">卷四 · 歷程紀實</div>
+          <h2 class="section-title">白紙初啟 · 萬象未萌</h2>
+          <div class="brush-divider"></div>
+          <p class="section-intro">大音希聲，大象無形。空白正是最深邃的意境。</p>
         </div>
 
-        <div class="quest-console reveal">
-          <div class="console-bar">
-            <span class="console-title">// SYSTEM_LOG: ACHIEVEMENTS_QUERY.sh</span>
-            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan-neon);">[STATUS: READY]</span>
+        <div class="zen-slate-box reveal">
+          <div class="zen-slate-seal">
+            <span class="seal-stamp" style="font-size: 1.2rem; padding: 0.4rem 0.8rem;">留白至境</span>
           </div>
-          <div class="console-body">
-            <div class="terminal-line">
-              <span class="term-prompt">user@132-terminal:~$</span>
-              <span class="term-cmd">scan --records --verbose</span>
-            </div>
-            <div class="term-output">
-              > 正在檢索歷史資料庫...<br>
-              > 歷程掃描完畢：目前狀態為 [ 初始畫布 / Clean Slate ]。<br>
-              > 備註：無過往拘束，代表具備 100% 的擴充彈性與最高自由度。
-            </div>
-
-            <!-- Stylized Clean Slate Container -->
-            <div class="clean-slate-box">
-              <div class="clean-slate-icon">⚡</div>
-              <div class="clean-slate-title">LEVEL 1 EXPLORER // 無拘無束</div>
-              <p class="clean-slate-desc">
-                目前尚未有正式上架的作品或登錄的活動紀錄。所有系統資源已全數就緒，正等待第一個值得投入的精彩冒險與合作契機！
-              </p>
-              <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--emerald-neon);">
-                [ READY FOR NEW MISSIONS & SIDE QUESTS ]
-              </div>
-            </div>
+          <h3 class="zen-slate-title">無過往拘束 · 待書寫傳奇</h3>
+          <p class="zen-slate-desc">
+            水墨丹青，最貴在於「留白」。<br>
+            目前尚無登錄之過往作品或活動紀錄——如同鋪展於案前的一匹澄心宣紙，毫無陳規墨漬。<br>
+            筆已在手，墨已研開，正靜候值得全心以赴的壯闊篇章。
+          </p>
+          <div class="zen-quote-pill">
+            「知白守黑，虛室生白。」
           </div>
         </div>
       </section>
 
-      <!-- CONTACT & TRANSMISSION -->
+      <!-- SECTION 5: 卷五 · 孤舟逢友 (CONTACT) -->
       <section id="contact">
-        <div class="contact-card reveal">
-          <div class="section-tag" style="justify-content: center; margin-bottom: 0.8rem;">
-            // 05. TRANSMISSION PROTOCOL
+        <div class="contact-pavilion reveal">
+          <div class="section-chapter" style="justify-content: center; margin-bottom: 0.8rem;">
+            卷五 · 結緣問道
           </div>
-          <h2 class="contact-title">發送連線訊號給 132</h2>
+          <h2 class="contact-title">孤舟夜渡 · 願逢知己</h2>
           <p class="contact-text">
-            如果你也喜歡吉他、電影、打遊戲，或者想聊聊生活與美學，歡迎隨時向我的頻率發送封包。保持 Chill，隨時在線。
+            若君亦喜撫琴弄樂、醉心光影、暢談電玩或共賞水墨之美，何妨投帖相候？<br>
+            青山不改，綠水長流，132 隨時在此候教。
           </p>
-          <div class="ping-box">
-            <button class="btn btn-primary" id="pingBtn">
-              <span>⚡ 發送 PING 訊號</span>
+
+          <div class="ink-ping-cluster">
+            <button class="btn-ink btn-ink-primary" id="pingBtn">
+              <span>🏮 叩門寄音 (傳送訊號)</span>
             </button>
-            <div class="toast-hud" id="pingToast">
-              ✓ PONG! 132 收到訊號 —「保持 Chill，一切都在最佳軌道上。」
+
+            <div class="ink-toast" id="pingToast">
+              ✓ 琴音傳響：132 收到閣下訪信 —「天涯若比鄰，保持一份 Chill。」
             </div>
           </div>
         </div>
       </section>
     </main>
 
-    <!-- FOOTER -->
+    <!-- FOOTER: 歲月靜好 -->
     <footer>
       <div class="footer-content">
         <div>
-          <span class="footer-brand">132</span> // THE CHILL GUY ARCHIVE
+          <span class="footer-brand">132</span> // 墨韻留白 · CHILL GUY ARCHIVE
         </div>
-        <div class="footer-status">
-          <div class="pulse-dot"></div>
-          <span>UPTIME: <span id="uptimeVal">00:00:00</span></span>
+        <div style="font-family: var(--font-brush); font-size: 1.1rem; color: var(--paper-white);">
+          彈吉他 · AET · 打遊戲 · 看電影
         </div>
-        <div style="color: var(--text-dim);">
-          STYLIZED IN PURE HTML & CSS // HIGH-TECH OLED BLACK
+        <div style="color: var(--ink-dim);">
+          PURE INK-WASH AESTHETIC // 焦墨宣紙 · 留白自得
         </div>
       </div>
     </footer>
@@ -1474,10 +1391,10 @@
   </div>
 
   <!-- =========================================================
-       VANILLA JAVASCRIPT: PARTICLES, SCROLL OBSERVER, INTERACTION
-       ========================================================= */ -->
+       VANILLA JAVASCRIPT: INK CANVAS & SMOOTH SCROLL OBSERVER
+       ========================================================= -->
   <script>
-    // 1. Mobile Navigation Menu Toggle
+    // 1. Mobile Menu Toggle
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.getElementById('navMenu');
     
@@ -1485,14 +1402,13 @@
       menuToggle.addEventListener('click', () => {
         navMenu.classList.toggle('open');
       });
-      // Close menu on link click
       navMenu.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => navMenu.classList.remove('open'));
       });
     }
 
-    // 2. IntersectionObserver for Scroll Fade-In Animations
-    const revealObserver = new IntersectionObserver((entries) => {
+    // 2. IntersectionObserver for Elegant Fade-in on Scroll
+    const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
@@ -1503,114 +1419,79 @@
       rootMargin: "0px 0px -40px 0px"
     });
 
-    document.querySelectorAll('.reveal').forEach(el => {
-      revealObserver.observe(el);
-    });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // 3. Ambient Cyber Canvas Particle Network
-    const canvas = document.getElementById('cyber-canvas');
+    // 3. Generative Ink Wash Floating Smoke / Mist Canvas
+    const canvas = document.getElementById('ink-canvas');
     const ctx = canvas.getContext('2d');
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
+    let w = canvas.width = window.innerWidth;
+    let h = canvas.height = window.innerHeight;
 
     window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
     });
 
     const particles = [];
-    const particleCount = Math.min(Math.floor(window.innerWidth / 18), 75);
+    const count = Math.min(Math.floor(window.innerWidth / 22), 50);
 
-    class Particle {
+    class InkSmoke {
       constructor() {
         this.reset();
       }
       reset() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.45;
-        this.vy = (Math.random() - 0.5) * 0.45;
-        this.size = Math.random() * 1.8 + 0.8;
-        this.color = Math.random() > 0.4 ? 'rgba(0, 240, 255,' : 'rgba(168, 85, 247,';
-        this.alpha = Math.random() * 0.5 + 0.2;
+        this.x = Math.random() * w;
+        this.y = Math.random() * h;
+        this.radius = Math.random() * 80 + 30;
+        this.vx = (Math.random() - 0.5) * 0.35;
+        this.vy = (Math.random() - 0.5) * 0.35;
+        this.alpha = Math.random() * 0.045 + 0.015;
       }
       update() {
         this.x += this.vx;
         this.y += this.vy;
-        if (this.x < 0 || this.x > width) this.vx *= -1;
-        if (this.y < 0 || this.y > height) this.vy *= -1;
+        if (this.x < -100 || this.x > w + 100) this.vx *= -1;
+        if (this.y < -100 || this.y > h + 100) this.vy *= -1;
       }
       draw() {
+        const grad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+        grad.addColorStop(0, `rgba(245, 243, 236, ${this.alpha})`);
+        grad.addColorStop(0.5, `rgba(197, 160, 89, ${this.alpha * 0.4})`);
+        grad.addColorStop(1, 'rgba(8, 9, 11, 0)');
+
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `${this.color}${this.alpha})`;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = 'rgba(0, 240, 255, 0.4)';
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = grad;
         ctx.fill();
-        ctx.shadowBlur = 0;
       }
     }
 
-    for (let i = 0; i < particleCount; i++) {
-      particles.push(new Particle());
+    for (let i = 0; i < count; i++) {
+      particles.push(new InkSmoke());
     }
 
-    function animateParticles() {
-      ctx.clearRect(0, 0, width, height);
-
-      // Connect close particles with subtle cyber lines
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 110) {
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 240, 255, ${0.15 * (1 - dist / 110)})`;
-            ctx.lineWidth = 0.75;
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-
+    function renderInk() {
+      ctx.clearRect(0, 0, w, h);
       particles.forEach(p => {
         p.update();
         p.draw();
       });
-
-      requestAnimationFrame(animateParticles);
+      requestAnimationFrame(renderInk);
     }
-    animateParticles();
+    renderInk();
 
-    // 4. Interactive Ping Button with HUD Toast
+    // 4. Interactive Ping Button with Classical Seal Toast
     const pingBtn = document.getElementById('pingBtn');
     const pingToast = document.getElementById('pingToast');
-    
     if (pingBtn && pingToast) {
       pingBtn.addEventListener('click', () => {
         pingToast.style.display = 'block';
-        pingBtn.innerHTML = '<span>✓ 訊號已發送！</span>';
+        pingBtn.innerHTML = '<span>✓ 已叩帖留信</span>';
         setTimeout(() => {
-          pingBtn.innerHTML = '<span>⚡ 發送 PING 訊號</span>';
-        }, 3000);
+          pingBtn.innerHTML = '<span>🏮 叩門寄音 (傳送訊號)</span>';
+        }, 3200);
       });
     }
-
-    // 5. System Uptime Counter in Footer
-    let seconds = 0;
-    const uptimeEl = document.getElementById('uptimeVal');
-    setInterval(() => {
-      seconds++;
-      const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
-      const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
-      const secs = String(seconds % 60).padStart(2, '0');
-      if (uptimeEl) {
-        uptimeEl.textContent = `${hrs}:${mins}:${secs}`;
-      }
-    }, 1000);
   </script>
 </body>
 </html>
