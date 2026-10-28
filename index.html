@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>132 // CHILL GUY - 個人檔案</title>
+  <!-- Google Fonts: Orbitron, Space Grotesk, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Orbitron:wght@500;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       CSS VARIABLES & DESIGN SYSTEM (TECH / OLED BLACK AESTHETIC)
+       ========================================================= */
+    :root {
+      --bg-black: #050608;
+      --bg-surface: #0b0e14;
+      --bg-card: rgba(13, 17, 24, 0.75);
+      --bg-card-hover: rgba(18, 24, 36, 0.9);
+      
+      --cyan-neon: #00f0ff;
+      --cyan-glow: rgba(0, 240, 255, 0.35);
+      --purple-neon: #a855f7;
+      --purple-glow: rgba(168, 85, 247, 0.35);
+      --emerald-neon: #00ffaa;
+      --emerald-glow: rgba(0, 255, 170, 0.3);
+      
+      --text-main: #f1f5f9;
+      --text-muted: #8492a6;
+      --text-dim: #475569;
+      
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-cyan: rgba(0, 240, 255, 0.3);
+      --border-cyan-bright: rgba(0, 240, 255, 0.8);
+      
+      --font-display: 'Orbitron', -apple-system, sans-serif;
+      --font-sans: 'Space Grotesk', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --transition-smooth: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Base Reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-black);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      overflow-x: hidden;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-black);
+      min-height: 100vh;
+      position: relative;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Selection Color */
+    ::selection {
+      background: var(--cyan-neon);
+      color: #000;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-black);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e2638;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--cyan-neon);
+      box-shadow: 0 0 10px var(--cyan-neon);
+    }
+
+    /* Background Canvas */
+    #cyber-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.75;
+    }
+
+    /* High-tech Grid Overlay */
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Glowing Cyber Scanline Effect */
+    .scanline {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan-neon), transparent);
+      opacity: 0.3;
+      z-index: 2;
+      animation: scanAnim 8s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes scanAnim {
+      0% { top: -2%; opacity: 0; }
+      15% { opacity: 0.4; }
+      85% { opacity: 0.4; }
+      100% { top: 102%; opacity: 0; }
+    }
+
+    /* Wrapper */
+    .page-wrapper {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* =========================================================
+       NAVIGATION HUD
+       ========================================================= */
+    .navbar {
+      position: sticky;
+      top: 1rem;
+      z-index: 100;
+      margin: 1.5rem auto 2rem;
+      background: rgba(10, 14, 22, 0.85);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-cyan);
+      border-radius: 8px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 240, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 1.4rem;
+      transition: var(--transition-smooth);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .brand-glitch {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 2px;
+      position: relative;
+      text-shadow: 0 0 10px var(--cyan-glow);
+    }
+
+    .brand-badge {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 0.15rem 0.5rem;
+      background: rgba(0, 255, 170, 0.12);
+      border: 1px solid var(--emerald-neon);
+      color: var(--emerald-neon);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--emerald-neon);
+      border-radius: 50%;
+      animation: pulseGlow 1.8s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px var(--emerald-neon); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 1.8rem;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      transition: var(--transition-smooth);
+      position: relative;
+      padding: 0.25rem 0;
+    }
+
+    .nav-link span {
+      color: var(--cyan-neon);
+      margin-right: 0.2rem;
+      font-size: 0.75rem;
+    }
+
+    .nav-link:hover {
+      color: #fff;
+      text-shadow: 0 0 8px var(--cyan-neon);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--cyan-neon);
+      box-shadow: 0 0 6px var(--cyan-neon);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Mobile Menu Toggle */
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--border-cyan);
+      color: var(--cyan-neon);
+      padding: 0.4rem 0.7rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    /* =========================================================
+       HERO SECTION
+       ========================================================= */
+    .hero {
+      padding: 5rem 0 4rem;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: center;
+      gap: 3rem;
+      min-height: calc(85vh - 100px);
+    }
+
+    .hero-content {
+      position: relative;
+    }
+
+    .cyber-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid var(--border-cyan);
+      padding: 0.35rem 0.9rem;
+      border-radius: 30px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--cyan-neon);
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.2rem, 7vw, 5.5rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -1px;
+      color: #ffffff;
+      margin-bottom: 0.8rem;
+      position: relative;
+      text-transform: uppercase;
+    }
+
+    .hero-title .glow-cyan {
+      color: var(--cyan-neon);
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.6), 0 0 40px rgba(0, 240, 255, 0.3);
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-mono);
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      color: var(--purple-neon);
+      text-shadow: 0 0 12px var(--purple-glow);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .typewriter-cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1.2em;
+      background: var(--purple-neon);
+      vertical-align: middle;
+      animation: blinkCursor 0.9s infinite;
+    }
+
+    @keyframes blinkCursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .hero-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 2.2rem;
+      line-height: 1.7;
+    }
+
+    .hero-desc strong {
+      color: #fff;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+    }
+
+    /* Futuristic HUD Buttons */
+    .btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      padding: 0.85rem 1.8rem;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      transition: var(--transition-smooth);
+      clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+    }
+
+    .btn-primary {
+      background: var(--cyan-neon);
+      color: #000;
+      box-shadow: 0 0 20px var(--cyan-glow);
+    }
+
+    .btn-primary:hover {
+      background: #38f8ff;
+      transform: translateY(-2px);
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.7);
+    }
+
+    .btn-secondary {
+      background: rgba(168, 85, 247, 0.1);
+      border: 1px solid var(--purple-neon);
+      color: #fff;
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(168, 85, 247, 0.25);
+      transform: translateY(-2px);
+      box-shadow: 0 0 25px var(--purple-glow);
+    }
+
+    /* Hero Tech Visualizer / Terminal HUD */
+    .hero-visual {
+      position: relative;
+    }
+
+    .hud-frame {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-cyan);
+      border-radius: 12px;
+      padding: 1.8rem;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 240, 255, 0.12);
+      overflow: hidden;
+    }
+
+    /* Corner HUD brackets */
+    .hud-corner {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--cyan-neon);
+      pointer-events: none;
+    }
+    .hud-corner.tl { top: 6px; left: 6px; border-right: none; border-bottom: none; }
+    .hud-corner.tr { top: 6px; right: 6px; border-left: none; border-bottom: none; }
+    .hud-corner.bl { bottom: 6px; left: 6px; border-right: none; border-top: none; }
+    .hud-corner.br { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+
+    .terminal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .terminal-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+    }
+
+    .hud-stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .hud-stat-box {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      padding: 0.8rem;
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.2rem;
+    }
+
+    .stat-val {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      color: var(--cyan-neon);
+      font-weight: 700;
+    }
+
+    .chill-meter {
+      margin-top: 1rem;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 0.9rem;
+    }
+
+    .chill-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .chill-bar-bg {
+      height: 8px;
+      background: #111622;
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .chill-bar-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, var(--cyan-neon), var(--purple-neon));
+      border-radius: 4px;
+      box-shadow: 0 0 10px var(--cyan-glow);
+      animation: chillFill 2s ease-out forwards;
+    }
+
+    @keyframes chillFill {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    /* =========================================================
+       SECTION COMMON LAYOUT & HEADINGS
+       ========================================================= */
+    section {
+      padding: 5rem 0;
+      position: relative;
+    }
+
+    .section-header {
+      margin-bottom: 3rem;
+      text-align: left;
+    }
+
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--cyan-neon);
+      letter-spacing: 2px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: #fff;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+
+    /* =========================================================
+       SKILL SECTION (彈吉他 - GUITAR HUD & FREQUENCY)
+       ========================================================= */
+    .skill-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-cyan);
+      border-radius: 12px;
+      padding: 2.5rem;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 240, 255, 0.08);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+      transition: var(--transition-smooth);
+    }
+
+    .skill-card:hover {
+      border-color: var(--border-cyan-bright);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9), 0 0 35px rgba(0, 240, 255, 0.2);
+    }
+
+    .skill-info h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .skill-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      background: rgba(168, 85, 247, 0.15);
+      border: 1px solid var(--purple-neon);
+      color: var(--purple-neon);
+      border-radius: 4px;
+    }
+
+    .skill-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .tech-tag {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      transition: var(--transition-smooth);
+    }
+
+    .tech-tag:hover {
+      border-color: var(--cyan-neon);
+      color: var(--cyan-neon);
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+    }
+
+    /* Sound Frequency Audio Visualizer */
+    .visualizer-box {
+      background: rgba(5, 7, 12, 0.9);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      border-radius: 8px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      position: relative;
+    }
+
+    .visualizer-top {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .equalizer-bars {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      height: 90px;
+      gap: 5px;
+      padding: 0 0.5rem;
+    }
+
+    .eq-bar {
+      flex: 1;
+      background: linear-gradient(to top, var(--cyan-neon), var(--purple-neon));
+      border-radius: 3px 3px 0 0;
+      opacity: 0.85;
+      box-shadow: 0 0 8px var(--cyan-glow);
+      animation: audioWave 1.4s ease-in-out infinite alternate;
+    }
+
+    /* Staggered animation delays for wave feel */
+    .eq-bar:nth-child(1) { height: 35%; animation-delay: 0.1s; }
+    .eq-bar:nth-child(2) { height: 75%; animation-delay: 0.3s; }
+    .eq-bar:nth-child(3) { height: 50%; animation-delay: 0.6s; }
+    .eq-bar:nth-child(4) { height: 90%; animation-delay: 0.2s; }
+    .eq-bar:nth-child(5) { height: 40%; animation-delay: 0.5s; }
+    .eq-bar:nth-child(6) { height: 85%; animation-delay: 0.4s; }
+    .eq-bar:nth-child(7) { height: 60%; animation-delay: 0.7s; }
+    .eq-bar:nth-child(8) { height: 95%; animation-delay: 0.15s; }
+    .eq-bar:nth-child(9) { height: 45%; animation-delay: 0.35s; }
+    .eq-bar:nth-child(10) { height: 70%; animation-delay: 0.55s; }
+    .eq-bar:nth-child(11) { height: 80%; animation-delay: 0.25s; }
+    .eq-bar:nth-child(12) { height: 30%; animation-delay: 0.45s; }
+
+    @keyframes audioWave {
+      0% { transform: scaleY(0.3); opacity: 0.5; }
+      100% { transform: scaleY(1); opacity: 1; box-shadow: 0 0 14px var(--purple-glow); }
+    }
+
+    .guitar-strings {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-top: 0.5rem;
+    }
+
+    .guitar-string {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    .string-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(0, 240, 255, 0.4), rgba(255, 255, 255, 0.15), rgba(0, 240, 255, 0.4));
+      position: relative;
+    }
+
+    .guitar-string:hover .string-line {
+      background: var(--cyan-neon);
+      box-shadow: 0 0 8px var(--cyan-neon);
+      height: 2px;
+    }
+
+    /* =========================================================
+       INTERESTS SECTION (AET, PLAY VIDEO GAME, WATCH FILM)
+       ========================================================= */
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+    }
+
+    .interest-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 2.2rem 1.8rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--transition-smooth);
+      overflow: hidden;
+    }
+
+    .interest-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--cyan-neon), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .interest-card:hover {
+      border-color: var(--border-cyan);
+      transform: translateY(-6px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 240, 255, 0.15);
+      background: var(--bg-card-hover);
+    }
+
+    .interest-card:hover::before {
+      opacity: 1;
+    }
+
+    .interest-icon-hud {
+      width: 52px;
+      height: 52px;
+      border-radius: 8px;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid var(--border-cyan);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.4rem;
+      color: var(--cyan-neon);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+    }
+
+    .interest-card:nth-child(2) .interest-icon-hud {
+      background: rgba(168, 85, 247, 0.08);
+      border-color: var(--purple-neon);
+      color: var(--purple-neon);
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
+    }
+
+    .interest-card:nth-child(3) .interest-icon-hud {
+      background: rgba(0, 255, 170, 0.08);
+      border-color: var(--emerald-neon);
+      color: var(--emerald-neon);
+      box-shadow: 0 0 15px rgba(0, 255, 170, 0.15);
+    }
+
+    .interest-index {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      margin-bottom: 0.3rem;
+    }
+
+    .interest-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    .interest-text {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.4rem;
+    }
+
+    .interest-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .status-ok {
+      color: var(--emerald-neon);
+    }
+
+    /* =========================================================
+       PROJECTS / ACTIVITIES SECTION (QUEST LOG - STATUS: CLEAN SLATE)
+       ========================================================= */
+    .quest-console {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .console-bar {
+      background: rgba(10, 14, 22, 0.9);
+      padding: 0.8rem 1.4rem;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .console-title {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--cyan-neon);
+      letter-spacing: 1px;
+    }
+
+    .console-body {
+      padding: 2.2rem;
+      font-family: var(--font-mono);
+    }
+
+    .terminal-line {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      align-items: flex-start;
+      line-height: 1.6;
+    }
+
+    .term-prompt {
+      color: var(--cyan-neon);
+      user-select: none;
+    }
+
+    .term-cmd {
+      color: #fff;
+    }
+
+    .term-output {
+      color: var(--text-muted);
+      padding-left: 1.8rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+
+    .clean-slate-box {
+      background: rgba(0, 240, 255, 0.03);
+      border: 1px dashed var(--border-cyan);
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .clean-slate-icon {
+      font-size: 2.2rem;
+      color: var(--cyan-neon);
+      margin-bottom: 0.6rem;
+      text-shadow: 0 0 15px var(--cyan-glow);
+    }
+
+    .clean-slate-title {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .clean-slate-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 500px;
+      margin: 0 auto 1.2rem;
+    }
+
+    /* =========================================================
+       CONTACT / SIGNAL SECTION
+       ========================================================= */
+    .contact-card {
+      background: linear-gradient(135deg, rgba(13, 17, 24, 0.9), rgba(20, 26, 38, 0.85));
+      border: 1px solid var(--border-cyan);
+      border-radius: 16px;
+      padding: 3.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(0, 240, 255, 0.15);
+    }
+
+    .contact-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(0, 240, 255, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .contact-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .contact-text {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 580px;
+      margin: 0 auto 2.2rem;
+      line-height: 1.7;
+    }
+
+    .ping-box {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .toast-hud {
+      display: none;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      background: rgba(0, 255, 170, 0.15);
+      border: 1px solid var(--emerald-neon);
+      color: var(--emerald-neon);
+      padding: 0.6rem 1.4rem;
+      border-radius: 6px;
+      box-shadow: 0 0 15px rgba(0, 255, 170, 0.3);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+    footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 3rem 0;
+      margin-top: 4rem;
+      position: relative;
+      z-index: 3;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-dim);
+    }
+
+    .footer-brand {
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .footer-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* =========================================================
+       SCROLL REVEAL ANIMATIONS (Fade-in on Scroll)
+       ========================================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Staggered transition helper */
+    .delay-1 { transition-delay: 0.15s; }
+    .delay-2 { transition-delay: 0.3s; }
+    .delay-3 { transition-delay: 0.45s; }
+
+    /* =========================================================
+       RESPONSIVE BREAKPOINTS (Mobile & Tablet)
+       ========================================================= */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 3.5rem 0 2rem;
+        gap: 2.5rem;
+        text-align: left;
+      }
+      
+      .skill-card {
+        grid-template-columns: 1fr;
+        padding: 1.8rem;
+        gap: 2rem;
+      }
+
+      .interests-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+
+      .hud-stat-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        position: relative;
+        top: 0;
+        margin: 1rem 0;
+      }
+
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin-top: 0.5rem;
+        background: rgba(10, 14, 22, 0.98);
+        border: 1px solid var(--border-cyan);
+        border-radius: 8px;
+        flex-direction: column;
+        padding: 1.2rem;
+        gap: 1.2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+      }
+
+      .nav-menu.open {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .hero-title {
+        font-size: 3.5rem;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Interactive Canvas (Futuristic Cyber Particles) -->
+  <canvas id="cyber-canvas"></canvas>
+
+  <!-- High-tech Grid & Scanline FX -->
+  <div class="grid-overlay"></div>
+  <div class="scanline"></div>
+
+  <div class="page-wrapper">
+
+    <!-- NAVIGATION HUD -->
+    <header class="navbar">
+      <a href="#" class="nav-brand">
+        <span class="brand-glitch">132</span>
+        <div class="brand-badge">
+          <div class="pulse-dot"></div>
+          <span>SYS.ONLINE</span>
+        </div>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+        // MENU
+      </button>
+
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#about" class="nav-link"><span>01</span>// 關於我</a></li>
+        <li><a href="#skills" class="nav-link"><span>02</span>// 技能矩陣</a></li>
+        <li><a href="#interests" class="nav-link"><span>03</span>// 興趣模組</a></li>
+        <li><a href="#quests" class="nav-link"><span>04</span>// 任務歷程</a></li>
+        <li><a href="#contact" class="nav-link"><span>05</span>// 頻率連線</a></li>
+      </ul>
+    </header>
+
+    <main>
+      <!-- HERO SECTION -->
+      <section class="hero" id="hero">
+        <div class="hero-content reveal">
+          <div class="cyber-pill">
+            <span style="color: var(--emerald-neon);">●</span> PROTOCOL // CHILL GUY DETECTED
+          </div>
+          <h1 class="hero-title">
+            I AM <span class="glow-cyan">132</span>
+          </h1>
+          <div class="hero-subtitle">
+            <span>//</span>
+            <span id="typewriterText">chill guy</span>
+            <span class="typewriter-cursor"></span>
+          </div>
+          <p class="hero-desc">
+            在喧囂的世界裡，維持最放鬆的運作頻率。<br>
+            喜歡<strong>彈吉他</strong>、沉浸於<strong>AET</strong>、探索<strong>電玩宇宙</strong>與品味<strong>光影電影</strong>。
+          </p>
+          <div class="hero-cta">
+            <a href="#skills" class="btn btn-primary">
+              <span>INITIALIZE PROFILE</span>
+              <span>→</span>
+            </a>
+            <a href="#contact" class="btn btn-secondary">
+              <span>SEND TRANSMISSION</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- HERO HUD DISPLAY -->
+        <div class="hero-visual reveal delay-1">
+          <div class="hud-frame">
+            <div class="hud-corner tl"></div>
+            <div class="hud-corner tr"></div>
+            <div class="hud-corner bl"></div>
+            <div class="hud-corner br"></div>
+
+            <div class="terminal-header">
+              <div class="terminal-dots">
+                <div class="dot dot-red"></div>
+                <div class="dot dot-yellow"></div>
+                <div class="dot dot-green"></div>
+              </div>
+              <div class="terminal-title">IDENTITY_SCANNER.EXE</div>
+            </div>
+
+            <div class="hud-stat-grid">
+              <div class="hud-stat-box">
+                <div class="stat-label">USER ID</div>
+                <div class="stat-val">132</div>
+              </div>
+              <div class="hud-stat-box">
+                <div class="stat-label">ARCHETYPE</div>
+                <div class="stat-val" style="color: var(--purple-neon); font-size: 1rem;">CHILL GUY</div>
+              </div>
+              <div class="hud-stat-box">
+                <div class="stat-label">SYSTEM VIBE</div>
+                <div class="stat-val" style="color: var(--emerald-neon);">99.9%</div>
+              </div>
+              <div class="hud-stat-box">
+                <div class="stat-label">STATUS</div>
+                <div class="stat-val">ACTIVE</div>
+              </div>
+            </div>
+
+            <div class="chill-meter">
+              <div class="chill-bar-label">
+                <span style="color: var(--text-muted);">RELAXATION QUOTIENT</span>
+                <span style="color: var(--cyan-neon); font-family: var(--font-mono);">MAXIMUM</span>
+              </div>
+              <div class="chill-bar-bg">
+                <div class="chill-bar-fill"></div>
+              </div>
+            </div>
+
+            <div style="margin-top: 1rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim);">
+              > COORDINATES: 25.0330° N, 121.5654° E<br>
+              > ENCRYPTION: QUANTUM_CHILL_v2.0
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT SECTION -->
+      <section id="about">
+        <div class="section-header reveal">
+          <div class="section-tag">// 01. CORE IDENTITY</div>
+          <h2 class="section-title">關於 132</h2>
+          <p class="section-desc">保持從容不迫的生活哲學，在極致科技感中尋找純粹的平靜。</p>
+        </div>
+
+        <div class="quest-console reveal">
+          <div class="console-bar">
+            <span class="console-title">// TERMINAL: BIO_MODULE.log</span>
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--emerald-neon);">[SYNCED]</span>
+          </div>
+          <div class="console-body">
+            <div class="terminal-line">
+              <span class="term-prompt">user@132-terminal:~$</span>
+              <span class="term-cmd">cat about_me.json</span>
+            </div>
+            <div class="term-output">
+{<br>
+&nbsp;&nbsp;<span style="color: var(--cyan-neon);">"name"</span>: <span style="color: #fff;">"132"</span>,<br>
+&nbsp;&nbsp;<span style="color: var(--cyan-neon);">"motto"</span>: <span style="color: #fff;">"chill guy"</span>,<br>
+&nbsp;&nbsp;<span style="color: var(--cyan-neon);">"style_preference"</span>: <span style="color: #fff;">"科技感 / OLED Deep Black"</span>,<br>
+&nbsp;&nbsp;<span style="color: var(--cyan-neon);">"current_focus"</span>: <span style="color: #fff;">"弦音頻率探索 (彈吉他) & 多元感官體驗"</span>,<br>
+&nbsp;&nbsp;<span style="color: var(--cyan-neon);">"life_rule"</span>: <span style="color: var(--purple-neon);">"不急不躁，用最 chill 的步調把每件事做到最好。"</span><br>
+}
+            </div>
+            <div class="terminal-line">
+              <span class="term-prompt">user@132-terminal:~$</span>
+              <span class="term-cmd" style="color: var(--emerald-neon);">echo "Status: 穩定運作中，準備迎接更多未知。"</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SKILLS SECTION (彈吉他) -->
+      <section id="skills">
+        <div class="section-header reveal">
+          <div class="section-tag">// 02. SKILL MATRIX</div>
+          <h2 class="section-title">擅長與想學的技能</h2>
+          <p class="section-desc">以音符編織頻率，專注於六弦之上的旋律構建。</p>
+        </div>
+
+        <div class="skill-card reveal">
+          <div class="skill-info">
+            <div class="skill-badge">AUDIO PROTOCOL</div>
+            <h3>彈吉他 <span style="font-size: 1.2rem; color: var(--cyan-neon);">GUITAR</span></h3>
+            <p class="skill-desc">
+              不論是清脆乾淨的木吉他指彈，還是充滿能量的電吉他破音，吉他是我調劑心靈與探索聲學美感的重要核心。目前正持續精進音階邏輯、和弦進行與節奏律動。
+            </p>
+            <div class="skill-tags">
+              <span class="tech-tag"># 指彈演奏 (Fingerstyle)</span>
+              <span class="tech-tag"># 和弦律動 (Chords & Groove)</span>
+              <span class="tech-tag"># 音色調校 (Acoustic / Electric)</span>
+              <span class="tech-tag"># 節奏感 (BPM Synchronizer)</span>
+            </div>
+          </div>
+
+          <div class="visualizer-box">
+            <div class="visualizer-top">
+              <span>FREQUENCY: 440 Hz (STANDARD A)</span>
+              <span style="color: var(--cyan-neon);">TUNING: E A D G B E</span>
+            </div>
+
+            <!-- Dynamic Equalizer Bars -->
+            <div class="equalizer-bars">
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+              <div class="eq-bar"></div>
+            </div>
+
+            <!-- 6 Guitar Strings Interactive Visual -->
+            <div class="guitar-strings">
+              <div class="guitar-string"><span>E6</span><div class="string-line"></div></div>
+              <div class="guitar-string"><span>A5</span><div class="string-line"></div></div>
+              <div class="guitar-string"><span>D4</span><div class="string-line"></div></div>
+              <div class="guitar-string"><span>G3</span><div class="string-line"></div></div>
+              <div class="guitar-string"><span>B2</span><div class="string-line"></div></div>
+              <div class="guitar-string"><span>E1</span><div class="string-line"></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INTERESTS SECTION (aet, play video game, watch film) -->
+      <section id="interests">
+        <div class="section-header reveal">
+          <div class="section-tag">// 03. SUBROUTINES & PASSIONS</div>
+          <h2 class="section-title">核心興趣模組</h2>
+          <p class="section-desc">生活的三大支柱：美學感知、虛擬挑戰與光影故事。</p>
+        </div>
+
+        <div class="interests-grid">
+          <!-- Interest 1: aet -->
+          <div class="interest-card reveal delay-1">
+            <div>
+              <div class="interest-icon-hud">🎨</div>
+              <div class="interest-index">MODULE // 01</div>
+              <h3 class="interest-title">AET</h3>
+              <p class="interest-text">
+                探索美學（Art & Aesthetics）的細微脈絡。對視覺構圖、前衛設計、色彩搭配與極簡科技感有著敏銳的直覺與熱情。
+              </p>
+            </div>
+            <div class="interest-footer">
+              <span>TAG: SENSORY_ART</span>
+              <span class="status-ok">● ACTIVE</span>
+            </div>
+          </div>
+
+          <!-- Interest 2: play video game -->
+          <div class="interest-card reveal delay-2">
+            <div>
+              <div class="interest-icon-hud">🎮</div>
+              <div class="interest-index">MODULE // 02</div>
+              <h3 class="interest-title">PLAY VIDEO GAME</h3>
+              <p class="interest-text">
+                在虛擬世界中漫遊冒險，享受反應力的考驗、沉浸式劇情的撼動與策略佈局的成就感，是放鬆心靈的絕佳殿堂。
+              </p>
+            </div>
+            <div class="interest-footer">
+              <span>TAG: CYBER_GAMING</span>
+              <span class="status-ok">● ONLINE</span>
+            </div>
+          </div>
+
+          <!-- Interest 3: watch film -->
+          <div class="interest-card reveal delay-3">
+            <div>
+              <div class="interest-icon-hud">🎬</div>
+              <div class="interest-index">MODULE // 03</div>
+              <h3 class="interest-title">WATCH FILM</h3>
+              <p class="interest-text">
+                喜愛光影交織的故事敘述。透過兩小時的銀幕篇章走進不同時空與人生，從導演鏡頭與配樂中汲取深度思考與靈感。
+              </p>
+            </div>
+            <div class="interest-footer">
+              <span>TAG: CINEMA_ARCHIVE</span>
+              <span class="status-ok">● STREAMING</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUESTS & ACTIVITIES SECTION (做過的作品或參加過的活動：無) -->
+      <section id="quests">
+        <div class="section-header reveal">
+          <div class="section-tag">// 04. ADVENTURE LOG</div>
+          <h2 class="section-title">做過的作品或活動</h2>
+          <p class="section-desc">以乾淨透明的狀態出發，等待解鎖第一個傳奇任務。</p>
+        </div>
+
+        <div class="quest-console reveal">
+          <div class="console-bar">
+            <span class="console-title">// SYSTEM_LOG: ACHIEVEMENTS_QUERY.sh</span>
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan-neon);">[STATUS: READY]</span>
+          </div>
+          <div class="console-body">
+            <div class="terminal-line">
+              <span class="term-prompt">user@132-terminal:~$</span>
+              <span class="term-cmd">scan --records --verbose</span>
+            </div>
+            <div class="term-output">
+              > 正在檢索歷史資料庫...<br>
+              > 歷程掃描完畢：目前狀態為 [ 初始畫布 / Clean Slate ]。<br>
+              > 備註：無過往拘束，代表具備 100% 的擴充彈性與最高自由度。
+            </div>
+
+            <!-- Stylized Clean Slate Container -->
+            <div class="clean-slate-box">
+              <div class="clean-slate-icon">⚡</div>
+              <div class="clean-slate-title">LEVEL 1 EXPLORER // 無拘無束</div>
+              <p class="clean-slate-desc">
+                目前尚未有正式上架的作品或登錄的活動紀錄。所有系統資源已全數就緒，正等待第一個值得投入的精彩冒險與合作契機！
+              </p>
+              <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--emerald-neon);">
+                [ READY FOR NEW MISSIONS & SIDE QUESTS ]
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTACT & TRANSMISSION -->
+      <section id="contact">
+        <div class="contact-card reveal">
+          <div class="section-tag" style="justify-content: center; margin-bottom: 0.8rem;">
+            // 05. TRANSMISSION PROTOCOL
+          </div>
+          <h2 class="contact-title">發送連線訊號給 132</h2>
+          <p class="contact-text">
+            如果你也喜歡吉他、電影、打遊戲，或者想聊聊生活與美學，歡迎隨時向我的頻率發送封包。保持 Chill，隨時在線。
+          </p>
+          <div class="ping-box">
+            <button class="btn btn-primary" id="pingBtn">
+              <span>⚡ 發送 PING 訊號</span>
+            </button>
+            <div class="toast-hud" id="pingToast">
+              ✓ PONG! 132 收到訊號 —「保持 Chill，一切都在最佳軌道上。」
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="footer-content">
+        <div>
+          <span class="footer-brand">132</span> // THE CHILL GUY ARCHIVE
+        </div>
+        <div class="footer-status">
+          <div class="pulse-dot"></div>
+          <span>UPTIME: <span id="uptimeVal">00:00:00</span></span>
+        </div>
+        <div style="color: var(--text-dim);">
+          STYLIZED IN PURE HTML & CSS // HIGH-TECH OLED BLACK
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- =========================================================
+       VANILLA JAVASCRIPT: PARTICLES, SCROLL OBSERVER, INTERACTION
+       ========================================================= */ -->
+  <script>
+    // 1. Mobile Navigation Menu Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (menuToggle && navMenu) {
+      menuToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('open');
+      });
+      // Close menu on link click
+      navMenu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => navMenu.classList.remove('open'));
+      });
+    }
+
+    // 2. IntersectionObserver for Scroll Fade-In Animations
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: "0px 0px -40px 0px"
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      revealObserver.observe(el);
+    });
+
+    // 3. Ambient Cyber Canvas Particle Network
+    const canvas = document.getElementById('cyber-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    const particleCount = Math.min(Math.floor(window.innerWidth / 18), 75);
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.45;
+        this.vy = (Math.random() - 0.5) * 0.45;
+        this.size = Math.random() * 1.8 + 0.8;
+        this.color = Math.random() > 0.4 ? 'rgba(0, 240, 255,' : 'rgba(168, 85, 247,';
+        this.alpha = Math.random() * 0.5 + 0.2;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > width) this.vx *= -1;
+        if (this.y < 0 || this.y > height) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `${this.color}${this.alpha})`;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = 'rgba(0, 240, 255, 0.4)';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Connect close particles with subtle cyber lines
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 110) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(0, 240, 255, ${0.15 * (1 - dist / 110)})`;
+            ctx.lineWidth = 0.75;
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // 4. Interactive Ping Button with HUD Toast
+    const pingBtn = document.getElementById('pingBtn');
+    const pingToast = document.getElementById('pingToast');
+    
+    if (pingBtn && pingToast) {
+      pingBtn.addEventListener('click', () => {
+        pingToast.style.display = 'block';
+        pingBtn.innerHTML = '<span>✓ 訊號已發送！</span>';
+        setTimeout(() => {
+          pingBtn.innerHTML = '<span>⚡ 發送 PING 訊號</span>';
+        }, 3000);
+      });
+    }
+
+    // 5. System Uptime Counter in Footer
+    let seconds = 0;
+    const uptimeEl = document.getElementById('uptimeVal');
+    setInterval(() => {
+      seconds++;
+      const hrs = String(Math.floor(seconds / 3600)).padStart(2, '0');
+      const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+      const secs = String(seconds % 60).padStart(2, '0');
+      if (uptimeEl) {
+        uptimeEl.textContent = `${hrs}:${mins}:${secs}`;
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
